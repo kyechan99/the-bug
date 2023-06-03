@@ -18,14 +18,10 @@ export type FontSizeTypes = typeof fonts;
 
 // Color Theme
 const colors = {
-    primary: "#953D93",
-    secondary: "#EA884C",
-    warning: "#FF383C",
-    grey: "#b3b3b3",
-    black: "#222222",
-    bg: "#F5F5F5",
-    lightPrimary: "#f0daee",
-    lightGrey: "#dbdbdb",
+    primary: "#F0C40A",
+    secondary: "#A3C2FF",
+    black: "#181B22",
+    bg: "#FFF",
 };
 export type ColorTypes = typeof colors;
 

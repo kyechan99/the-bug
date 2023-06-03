@@ -20,11 +20,7 @@ export const GlobalStyle = createGlobalStyle`
         :root {
             --primaryColor: ${theme.colors.primary};
             --secondaryColor: ${theme.colors.secondary};
-            --greyColor: ${theme.colors.grey};
             --blackColor: ${theme.colors.black};
-            --bgColor: ${theme.colors.bg};
-            --lightPrimaryColor: ${theme.colors.lightPrimary};
-            --lightGreyColor: ${theme.colors.lightGrey};
         }
 
         input {
@@ -34,9 +30,15 @@ export const GlobalStyle = createGlobalStyle`
             margin: 0px;
             font-family: ${theme.fonts.family.base};
             line-height: 1.5;
+            width: 100%;
+            height: 100vh;
             ${theme.devices.desktop} {
                 background: ${theme.colors.bg};
             } 
+        }
+        #root {
+            width: 100%;
+            height: 100vh;
         }
     
         ::selection {
