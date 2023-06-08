@@ -78,7 +78,7 @@ const StyledButton = styled.button<
     transition: .3s;
     &:hover {
         box-shadow: none;
-        transform: translate(3px, 3px);
+        transform: translate(2px, 3px);
     }
 
     &:disabled,

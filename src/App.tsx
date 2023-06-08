@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Road } from "./components/Road/Road";
+import { Road } from "./components/Game/Road";
 import "./styles/yuri-grid.scss";
 import { Button } from "./components/common/Button/Button";
 import styled from "styled-components";
@@ -21,14 +21,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  // const [mapData, setMapData] = React.useState<Number>();
-  const arr = [
-    [0, 0, 0, 1],
-    [0, 0, 0, 1],
-    [0, 0, 0, 1],
-    [1, 1, 1, 1],
-  ];
-
   return (
     <AppContainer className="App container-sm">
       <RouterProvider router={router} />

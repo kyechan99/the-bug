@@ -20,15 +20,6 @@ const Main = () => {
         <Button variant="secondary">Level Mode</Button>
         <Button variant="transparent">Make Game</Button>
       </MenuList>
-      <div className="row">
-        {/* {
-              arr.map( (v) => {
-                  return v.map(el => {
-                      return <Road>{el}</Road>;
-                    })
-                })
-            } */}
-      </div>
     </div>
   );
 };
