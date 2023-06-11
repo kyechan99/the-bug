@@ -1,13 +1,8 @@
-import { ActIcon } from "@common/Icon";
-import {
-  IconArrowUp,
-  IconCornerUpLeft,
-  IconCornerUpRight,
-  IconHexagonNumber0,
-} from "@tabler/icons-react";
-import { CommandType } from "@type/command";
 import React from "react";
 import styled, { css } from "styled-components";
+
+import { ActIcon } from "@common/Icon";
+import { CommandType } from "@type/command";
 
 interface CommandProps {
   variant: CommandType;

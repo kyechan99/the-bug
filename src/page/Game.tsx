@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 
 import { Road } from "@components/Game/Road";
 import { Command } from "@components/Game/Command";
-import { CommandType, initCommandData } from "@type/command";
+import { CommandType, actType, initCommandData } from "@type/command";
 import {
   IconHexagonNumber0,
   IconPlayerPlayFilled,
@@ -12,9 +12,10 @@ import {
 } from "@tabler/icons-react";
 import Feature from "@components/Game/Feature";
 import { Button } from "@common/Button/Button";
-import { Position } from "@type/position";
+import { Direction, DirectionType, PlayerData } from "@type/position";
 import { RoadType } from "@type/road";
-import { commandState, curCommandState } from "@recoil/game/atom";
+import { commandState, curCommandState, playerState } from "@recoil/game/atom";
+import Controller from "@components/Game/Controller";
 
 /*
   0: MOVE STRAIGHT
@@ -36,31 +37,13 @@ const Game = () => {
     [1, 1, 1, 1, 1],
   ]);
   const [maxCommandSize, setMaxCommandSize] = React.useState<number>(8);
-  // const [command, setCommand] = React.useState<CommandType[]>(
-  //   Array(maxCommandSize).fill(initCommandData)
-  // );
+  const [player, setPlayer] = useRecoilState(playerState);
   const [command, setCommand] = useRecoilState(commandState);
   const [curCommand, setCurCommand] = useRecoilState(curCommandState);
-
-  const [pos, setPos] = React.useState<Position>({
-    x: 0,
-    y: 0,
-  });
 
   React.useEffect(() => {
     setCommand(Array(maxCommandSize).fill(initCommandData));
   }, [maxCommandSize]);
-
-  // const [command, setCommand] = React.useState<CommandType[]>([
-  //   {
-  //     act: "MOVE",
-  //     condition: "NONE",
-  //   },
-  //   {
-  //     act: "TURN_LEFT",
-  //     condition: "IF_BLUE",
-  //   },
-  // ]);
 
   const decryption = (code: number): RoadType => {
     switch (code) {
@@ -80,6 +63,9 @@ const Game = () => {
     <GameContainer>
       <h2>ROUND 1</h2>
 
+      {player.direction}
+      {player.x}
+      {player.y}
       <GameBoard>
         {map.map((v, yIdx) => {
           return (
@@ -98,9 +84,7 @@ const Game = () => {
         })}
       </GameBoard>
 
-      <GameFeature>
-        <Feature />
-      </GameFeature>
+      <Feature />
 
       <GameCommand>
         <CommandFunction>
@@ -122,14 +106,7 @@ const Game = () => {
         </CommandFunction>
       </GameCommand>
 
-      <GamePlayer>
-        <Button>
-          <IconPlayerPlayFilled />
-        </Button>
-        <Button>
-          <IconRefresh />
-        </Button>
-      </GamePlayer>
+      <Controller />
     </GameContainer>
   );
 };
@@ -163,9 +140,4 @@ const CommandFunction = styled.div`
 `;
 const Function = styled.div`
   margin: 0.75rem 0.5rem 0rem 0.5rem;
-`;
-
-const GamePlayer = styled.div`
-  display: flex;
-  gap: 0.5rem;
 `;

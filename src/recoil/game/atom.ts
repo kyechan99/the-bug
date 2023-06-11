@@ -1,27 +1,28 @@
-import { atom, atomFamily } from "recoil";
+import { DefaultValue, atom, atomFamily, selector } from "recoil";
 
 import { RoadType } from "@type/road";
-import { Position } from "@type/position";
+import { Direction, PlayerData } from "@type/position";
 import { CommandType } from "@type/command";
 
 export const roadState = atomFamily<RoadType, string>({
-    key: "roadState",
-    default: "none",
+  key: "roadState",
+  default: "none",
 });
 
-export const playerState = atom<Position>({
-    key: "playerState",
-    default: {
-        x: 0,
-        y: 0,
-    },
+export const playerState = atom<PlayerData>({
+  key: "playerState",
+  default: {
+    direction: Direction.UP,
+    x: 1,
+    y: 1,
+  },
 });
 
 export const commandState = atom<CommandType[]>({
-    key: "commandState",
-    default: []
+  key: "commandState",
+  default: [],
 });
 export const curCommandState = atom<number>({
-    key: "curCommandState",
-    default: 0,
+  key: "curCommandState",
+  default: 0,
 });
