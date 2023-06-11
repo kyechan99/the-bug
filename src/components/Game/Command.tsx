@@ -50,13 +50,13 @@ const VARIANTS = {
   `,
 };
 
-const CommandStyled = styled.div<CommandProps>`
+const CommandStyled = styled.button<CommandProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin: 0px;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 1px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.primary};
   flex-basis: 100%;

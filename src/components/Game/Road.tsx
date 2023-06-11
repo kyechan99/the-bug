@@ -1,8 +1,9 @@
+import { RoadType } from "@type/road";
 import React from "react";
 import styled, { css } from "styled-components";
 
 interface RoadProps {
-  variant: "abled" | "disabled" | "goal" | "start";
+  variant: RoadType;
   children?: React.ReactNode;
 }
 
@@ -15,25 +16,25 @@ export const Road = ({ variant, children }: RoadProps) => {
 };
 
 const VARIANTS = {
-  abled: css`
+  none: css`
     background: ${({ theme }) => theme.colors.bg};
   `,
-  disabled: css`
+  wall: css`
     background: ${({ theme }) => theme.colors.grey};
     opacity: 0.5;
   `,
-  start: css`
+  yellow: css`
     background: ${({ theme }) => theme.colors.primary};
   `,
-  goal: css`
+  blue: css`
     background: ${({ theme }) => theme.colors.secondary};
   `,
 };
 
 const RoadStyled = styled.div<RoadProps>`
   margin: 0px;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   display: inline-block;
   border: 1px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.primary};

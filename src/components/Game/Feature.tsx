@@ -3,6 +3,7 @@ import {
   IconCornerUpLeft,
   IconCornerUpRight,
   IconEye,
+  IconHexagonNumber0,
 } from "@tabler/icons-react";
 import { conditionType, conditionList, actType } from "@type/command";
 import styled, { css } from "styled-components";
@@ -25,6 +26,10 @@ const Feature = () => {
     {
       code: "TURN_RIGHT",
       icon: <IconCornerUpRight />,
+    },
+    {
+      code: "F0",
+      icon: <IconHexagonNumber0 />,
     },
   ];
 
@@ -52,15 +57,15 @@ const FeatureButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 1px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.bg};
   flex-basis: 100%;
   border-radius: 0.125rem;
   margin: 1px 1px 4px 1px;
   box-shadow: 0px 3px 0 0 ${({ theme }) => theme.colors.black};
-  transition: .3s;
+  transition: 0.3s;
   &:hover {
     box-shadow: none;
     transform: translate(0px, 3px);
