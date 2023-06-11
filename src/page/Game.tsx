@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
 
 import { Road } from "@components/Game/Road";
 import { Command } from "@components/Game/Command";
@@ -13,6 +14,7 @@ import Feature from "@components/Game/Feature";
 import { Button } from "@common/Button/Button";
 import { Position } from "@type/position";
 import { RoadType } from "@type/road";
+import { commandState, curCommandState } from "@recoil/game/atom";
 
 /*
   0: MOVE STRAIGHT
@@ -34,13 +36,20 @@ const Game = () => {
     [1, 1, 1, 1, 1],
   ]);
   const [maxCommandSize, setMaxCommandSize] = React.useState<number>(8);
-  const [command, setCommand] = React.useState<CommandType[]>(
-    Array(maxCommandSize).fill(initCommandData)
-  );
+  // const [command, setCommand] = React.useState<CommandType[]>(
+  //   Array(maxCommandSize).fill(initCommandData)
+  // );
+  const [command, setCommand] = useRecoilState(commandState);
+  const [curCommand, setCurCommand] = useRecoilState(curCommandState);
+
   const [pos, setPos] = React.useState<Position>({
     x: 0,
     y: 0,
   });
+
+  React.useEffect(() => {
+    setCommand(Array(maxCommandSize).fill(initCommandData));
+  }, [maxCommandSize]);
 
   // const [command, setCommand] = React.useState<CommandType[]>([
   //   {
@@ -52,7 +61,6 @@ const Game = () => {
   //     condition: "IF_BLUE",
   //   },
   // ]);
-  const [selectIdx, setSelectIdx] = React.useState<number>(0);
 
   const decryption = (code: number): RoadType => {
     switch (code) {
@@ -75,10 +83,14 @@ const Game = () => {
       <GameBoard>
         {map.map((v, yIdx) => {
           return (
-            <GameBoardRow>
+            <GameBoardRow key={`row-${yIdx}`}>
               {v.map((el, xIdx) => {
                 return (
-                  <Road key={`${yIdx}-${xIdx}`} variant={decryption(el)}></Road>
+                  <Road
+                    id={`${yIdx}-${xIdx}`}
+                    key={`${yIdx}-${xIdx}`}
+                    variant={decryption(el)}
+                  ></Road>
                 );
               })}
             </GameBoardRow>
@@ -98,11 +110,11 @@ const Game = () => {
           {command.map((c, idx) => {
             return (
               <Command
-                key={`k-${idx}`}
+                key={`cmd-${idx}`}
                 variant={c}
-                select={idx === selectIdx}
+                select={idx === curCommand}
                 onClick={() => {
-                  setSelectIdx(idx);
+                  setCurCommand(idx);
                 }}
               />
             );

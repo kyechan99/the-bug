@@ -1,15 +1,17 @@
 /*
   ACT TYPE
 */
-export type actType =
-  | "NONE"
-  | "MOVE"
-  | "TURN_LEFT"
-  | "TURN_RIGHT"
-  | "PAINTING_NONE"
-  | "PAINTING_YELLOW"
-  | "PAINTING_BLUE"
-  | "F0";
+export const actList = [
+  "NONE",
+  "MOVE",
+  "TURN_LEFT",
+  "TURN_RIGHT",
+  "PAINTING_NONE",
+  "PAINTING_YELLOW",
+  "PAINTING_BLUE",
+  "F0",
+] as const;
+export type actType = (typeof actList)[number];
 
 /*
   CONDITION TYPE

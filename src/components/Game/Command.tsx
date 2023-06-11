@@ -1,7 +1,9 @@
+import { ActIcon } from "@common/Icon";
 import {
   IconArrowUp,
   IconCornerUpLeft,
   IconCornerUpRight,
+  IconHexagonNumber0,
 } from "@tabler/icons-react";
 import { CommandType } from "@type/command";
 import React from "react";
@@ -15,25 +17,13 @@ interface CommandProps {
 }
 
 export const Command = ({ variant, select, onClick }: CommandProps) => {
-  const CommandIcon = () => {
-    switch (variant.act) {
-      case "MOVE":
-        return <IconArrowUp />;
-      case "TURN_LEFT":
-        return <IconCornerUpLeft />;
-      case "TURN_RIGHT":
-        return <IconCornerUpRight />;
-      default:
-        return <></>;
-    }
-  };
   return (
     <CommandStyled
       variant={variant}
       className={`Command ${select ? "select" : ""}`}
       onClick={onClick}
     >
-      {CommandIcon()}
+      <ActIcon icon={variant.act} />
     </CommandStyled>
   );
 };
@@ -67,10 +57,9 @@ const CommandStyled = styled.button<CommandProps>`
     return VARIANTS[props.variant.condition];
   }}
 
-
   box-shadow: none;
   transform: translate(3px, 3px);
-  
+
   &.select {
     box-shadow: 0px 3px 0 0 ${({ theme }) => theme.colors.black};
     &:after {

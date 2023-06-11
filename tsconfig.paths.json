@@ -8,6 +8,7 @@
         "@assets/*": ["src/assets/*"],
         "@utils/*": ["src/utils/*"],
         "@hooks/*": ["src/hooks/*"],
+        "@recoil/*": ["src/recoil/*"],
         "@type/*": ["src/types/*"]
       }
     }

@@ -1,16 +1,26 @@
 import { RoadType } from "@type/road";
 import React from "react";
 import styled, { css } from "styled-components";
+import { useRecoilState } from "recoil";
+import { playerState, roadState } from "@recoil/game/atom";
+import Player from "./Player";
 
-interface RoadProps {
+type RaodStyledProps = {
   variant: RoadType;
-  children?: React.ReactNode;
-}
+};
 
-export const Road = ({ variant, children }: RoadProps) => {
+type RoadProps = RaodStyledProps & {
+  id: string;
+  children?: React.ReactNode;
+};
+
+export const Road = ({ id, variant, children }: RoadProps) => {
+  const [road, setRoad] = useRecoilState(roadState(id));
+  const [player, setPlayer] = useRecoilState(playerState);
+
   return (
     <RoadStyled variant={variant} className="road">
-      {children}
+      {id === `${player.y}-${player.x}` ? <Player /> : <></>}
     </RoadStyled>
   );
 };
@@ -31,11 +41,12 @@ const VARIANTS = {
   `,
 };
 
-const RoadStyled = styled.div<RoadProps>`
+const RoadStyled = styled.div<RaodStyledProps>`
   margin: 0px;
   width: 2.5rem;
   height: 2.5rem;
   display: inline-block;
+  position: relative;
   border: 1px solid ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.primary};
   flex-basis: 100%;

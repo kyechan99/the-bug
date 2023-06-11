@@ -1,3 +1,5 @@
+import { commandState, curCommandState } from "@recoil/game/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   IconArrowUp,
   IconCornerUpLeft,
@@ -5,8 +7,9 @@ import {
   IconEye,
   IconHexagonNumber0,
 } from "@tabler/icons-react";
-import { conditionType, conditionList, actType } from "@type/command";
+import { conditionType, conditionList, actType, actList } from "@type/command";
 import styled, { css } from "styled-components";
+import { ActIcon } from "@common/Icon";
 
 type ActFeatureType = {
   code: actType;
@@ -14,35 +17,52 @@ type ActFeatureType = {
 };
 
 const Feature = () => {
-  const actList: ActFeatureType[] = [
-    {
-      code: "MOVE",
-      icon: <IconArrowUp />,
-    },
-    {
-      code: "TURN_LEFT",
-      icon: <IconCornerUpLeft />,
-    },
-    {
-      code: "TURN_RIGHT",
-      icon: <IconCornerUpRight />,
-    },
-    {
-      code: "F0",
-      icon: <IconHexagonNumber0 />,
-    },
-  ];
+  const [command, setCommand] = useRecoilState(commandState);
+  const curCommand = useRecoilValue(curCommandState);
+
+  const actHandler = (code: actType) => {
+    const newStateArray = [...command];
+    newStateArray[curCommand] = {
+      ...newStateArray[curCommand],
+      act: code,
+    };
+
+    setCommand(newStateArray);
+  };
+
+  const conditionHandler = (condition: conditionType) => {
+    const newStateArray = [...command];
+    newStateArray[curCommand] = {
+      ...newStateArray[curCommand],
+      condition: condition,
+    };
+
+    setCommand(newStateArray);
+  };
 
   return (
     <div>
       <div>
         {actList.map((a) => (
-          <ActButton>{a.icon}</ActButton>
+          <ActButton
+            key={a}
+            onClick={() => {
+              actHandler(a);
+            }}
+          >
+            <ActIcon icon={a}></ActIcon>
+          </ActButton>
         ))}
       </div>
       <div>
-        {conditionList.map((a) => (
-          <ConditionButton variant={a}>
+        {conditionList.map((con) => (
+          <ConditionButton
+            key={con}
+            variant={con}
+            onClick={() => {
+              conditionHandler(con);
+            }}
+          >
             <IconEye />{" "}
           </ConditionButton>
         ))}

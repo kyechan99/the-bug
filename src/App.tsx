@@ -8,6 +8,7 @@ import { H1 } from "./components/common/Heading/Heading";
 import Main from "./page/Main";
 import Game from "./page/Game";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 
 const router = createBrowserRouter([
   {
@@ -22,9 +23,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <AppContainer className="App container-sm">
-      <RouterProvider router={router} />
-    </AppContainer>
+    <RecoilRoot>
+      <AppContainer className="App container-sm">
+        <RouterProvider router={router} />
+      </AppContainer>
+    </RecoilRoot>
   );
 }
 
