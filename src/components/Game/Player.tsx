@@ -1,11 +1,15 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useRecoilValue } from "recoil";
+import { gameState, playerState } from "@recoil/game/atom";
+
 import { IconBug } from "@tabler/icons-react";
-import { playerState } from "@recoil/game/atom";
+
 import { Direction } from "@type/position";
+import { GameMode } from "@type/game";
 
 const Player = () => {
   const pl = useRecoilValue(playerState);
+  const gameMode = useRecoilValue(gameState);
 
   const getRotate = () => {
     switch (pl.direction) {
@@ -23,7 +27,7 @@ const Player = () => {
   };
 
   return (
-    <PlayerCharacter rotate={getRotate()}>
+    <PlayerCharacter rotate={getRotate()} alive={gameMode === GameMode.FAIL}>
       <IconBug />
     </PlayerCharacter>
   );
@@ -31,9 +35,15 @@ const Player = () => {
 
 export default Player;
 
-const PlayerCharacter = styled.div<{ rotate: number }>`
+const PlayerCharacter = styled.div<{ rotate: number; alive: boolean }>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(${(props) => props.rotate || 0}deg);
+  ${(props) => {
+    if (props.alive)
+      return css`
+        color: ${props.theme.colors.warning};
+      `;
+  }}
 `;

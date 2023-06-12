@@ -10,22 +10,18 @@ import {
   playerState,
 } from "@recoil/game/atom";
 
-import { GameMode, actType, initCommandData } from "@type/game";
 import GameFeature from "@components/Game/GameFeature";
 import GameController from "@components/Game/GameController";
 import GameBoard from "@components/Game/GameBoard";
 import GameCompiler from "@components/Game/GameCompiler";
-import { posFormat } from "@utils/format";
-import { Direction } from "@type/position";
-import { useInterval } from "@hooks/useInterval";
-import { isWall } from "@utils/data";
 
-type FoodObjType = {
-  [key: string]: boolean;
-};
+import { useInterval } from "@hooks/useInterval";
+import { Direction } from "@type/position";
+import { FoodObjType, GameMode, actType, initCommandData } from "@type/game";
+import { isRoadCondition, isWall, roadDecryption } from "@utils/data";
+import { posFormat } from "@utils/format";
 
 const Game = () => {
-  const [maxCommandSize, setMaxCommandSize] = React.useState<number>(8);
   const [map, setMap] = useRecoilState(mapState);
   const [command, setCommand] = useRecoilState(commandState);
 
@@ -33,10 +29,6 @@ const Game = () => {
   const [player, setPlayer] = useRecoilState(playerState);
   const [food, setFood] = useRecoilState(foodState);
   const [curCommand, setCurCommand] = useRecoilState(curCommandState);
-
-  React.useEffect(() => {
-    setCommand(Array(maxCommandSize).fill(initCommandData));
-  }, [maxCommandSize]);
 
   React.useEffect(() => {
     if (map.length > 0) {
@@ -74,6 +66,8 @@ const Game = () => {
     } else if (gameMode === GameMode.REFRESH) {
       refreshGame();
       setGameMode(GameMode.READY);
+    } else if (gameMode === GameMode.INIT) {
+      initGame();
     } else if (gameMode === GameMode.SUCCESS) {
       console.log("GAME CLEAR !!! ");
     }
@@ -89,23 +83,31 @@ const Game = () => {
         setCurCommand(0);
         setGameMode((prev) => {
           if (prev === GameMode.FAIL || prev === GameMode.SUCCESS) return prev;
-          return GameMode.READY;
+          return GameMode.FAIL;
         });
         return;
       }
 
-      switch (command[curCommand].act) {
-        case "MOVE":
-          move();
-          break;
-        case "TURN_LEFT":
-        case "TURN_RIGHT":
-          rotate(command[curCommand].act);
-          break;
-        case "F0":
-          setCurCommand(0);
-          return;
+      if (
+        isRoadCondition(
+          roadDecryption(map[player.y][player.x]),
+          command[curCommand].condition
+        )
+      ) {
+        switch (command[curCommand].act) {
+          case "MOVE":
+            move();
+            break;
+          case "TURN_LEFT":
+          case "TURN_RIGHT":
+            rotate(command[curCommand].act);
+            break;
+          case "F0":
+            setCurCommand(0);
+            return;
+        }
       }
+
       setCurCommand(curCommand + 1);
     },
     gameMode === GameMode.PLAYING ? 1000 : null
@@ -155,7 +157,6 @@ const Game = () => {
     var data = require("../data/level_0/data_0.json");
     console.log("MAP DATA", data);
 
-    setMaxCommandSize(data.function[0].limit);
     setMap(data.map);
 
     let foodData: FoodObjType = {};
@@ -172,12 +173,11 @@ const Game = () => {
       y: data.start_position.y,
     });
 
-    setCommand([]);
+    setCommand(Array(data.function[0].limit).fill(initCommandData));
     setGameMode(GameMode.READY);
   };
 
   const refreshGame = () => {
-    console.log("!!!!!!!!!!!!");
     var data = require("../data/level_0/data_0.json");
     console.log("MAP DATA", data);
 

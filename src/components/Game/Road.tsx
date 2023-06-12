@@ -1,11 +1,13 @@
-import { RoadType } from "@type/road";
 import React from "react";
 import styled, { css } from "styled-components";
-import { RecoilState, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { foodState, playerState } from "@recoil/game/atom";
+
 import Player from "./Player";
 import { IconCandy } from "@tabler/icons-react";
+
 import { posFormat } from "@utils/format";
+import { RoadType } from "@type/road";
 
 type RaodStyledProps = {
   variant: RoadType;
@@ -17,8 +19,7 @@ type RoadProps = RaodStyledProps & {
 };
 
 export const Road = ({ id, variant, children }: RoadProps) => {
-  // const [road, setRoad] = useRecoilState(roadState(id));
-  const [player, setPlayer] = useRecoilState(playerState);
+  const player = useRecoilValue(playerState);
   const food = useRecoilValue(foodState);
 
   return (

@@ -1,23 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  commandState,
-  foodState,
-  gameState,
-  playerState,
-} from "@recoil/game/atom";
+import { useRecoilState } from "recoil";
+import { gameState } from "@recoil/game/atom";
 
-import { GameMode, actType } from "@type/game";
-import { Direction } from "@type/position";
+import { GameMode } from "@type/game";
 import { Button } from "@common/Button/Button";
 import {
   IconPlayerPlayFilled,
   IconPlayerStopFilled,
   IconPlayerTrackNextFilled,
   IconRefresh,
+  IconTrophyFilled,
 } from "@tabler/icons-react";
-import { posFormat } from "@utils/format";
 
 const GameController = () => {
   const [gameMode, setGameMode] = useRecoilState(gameState);
@@ -26,8 +20,6 @@ const GameController = () => {
     e.preventDefault();
 
     setGameMode((prev) => {
-      if (prev === GameMode.SUCCESS || prev === GameMode.FAIL)
-        return GameMode.REFRESH;
       if (prev === GameMode.PLAYING) return GameMode.READY;
       return GameMode.PLAYING;
     });
@@ -47,20 +39,31 @@ const GameController = () => {
 
   return (
     <GameControllerStyled>
-      <Button
-        onClick={playHandler}
-        variant={isGamePlaying() ? "primary" : "normal"}
-        holding={isGamePlaying()}
-      >
-        {isGamePlaying() ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}
-      </Button>
-      <Button onClick={refreshHandler}>
-        <IconRefresh />
-      </Button>
-      {gameMode === GameMode.SUCCESS && (
-        <Button>
-          <IconPlayerTrackNextFilled />
+      <ControllerList>
+        <Button
+          onClick={playHandler}
+          variant={isGamePlaying() ? "primary" : "normal"}
+          holding={isGamePlaying()}
+        >
+          {isGamePlaying() ? (
+            <IconPlayerStopFilled />
+          ) : (
+            <IconPlayerPlayFilled />
+          )}
         </Button>
+        <Button onClick={refreshHandler}>
+          <IconRefresh />
+        </Button>
+        {gameMode === GameMode.SUCCESS && (
+          <Button variant="secondary">
+            <IconPlayerTrackNextFilled />
+          </Button>
+        )}
+      </ControllerList>
+      {gameMode === GameMode.SUCCESS && (
+        <Message>
+          <IconTrophyFilled /> SUCCESS <IconTrophyFilled />
+        </Message>
       )}
     </GameControllerStyled>
   );
@@ -69,6 +72,19 @@ const GameController = () => {
 export default GameController;
 
 const GameControllerStyled = styled.div`
+  position: relative;
+`;
+const ControllerList = styled.div`
   display: flex;
   gap: 0.5rem;
+`;
+const Message = styled.div`
+  font-family: "Lilita One", sans-serif;
+  position: absolute;
+  margin-top: 1rem;
+  display: inline-flex;
+  gap: 0.5rem;
+  transform: translate(-50%, 0%);
+  left: 50%;
+  color: ${({ theme }) => theme.colors.primary};
 `;

@@ -51,6 +51,17 @@ export const GameMode = {
   PLAYING: "PLAYING",
   REFRESH: "REFRESH",
   SUCCESS: "SUCCESS",
-  FAIL: "FAIL"
+  FAIL: "FAIL",
+  INIT: "INIT"
 } as const;
 export type GameModeType = (typeof GameMode)[keyof typeof GameMode];
+
+
+/********************************************
+ * 
+ *      Food Data TYPE
+ * 
+ ********************************************/
+export type FoodObjType = {
+  [key: string]: boolean;
+};

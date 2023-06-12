@@ -1,3 +1,4 @@
+import { conditionType } from "@type/game";
 import { RoadType } from "@type/road";
 
 export const roadDecryption = (code: number): RoadType => {
@@ -14,6 +15,22 @@ export const roadDecryption = (code: number): RoadType => {
   return "wall";
 };
 
+export const isRoadCondition = (road: RoadType, condition: conditionType) => {
+  if (condition === "NONE") return true;
+
+  const conditions: {
+    condition: conditionType;
+    road: RoadType;
+  }[] = [
+    { condition: "IF_YELLOW", road: "yellow" },
+    { condition: "IF_BLUE", road: "blue" },
+  ];
+
+  return conditions.some(
+    (item) => item.condition === condition && item.road === road
+  );
+};
+
 export const isWall = (code: number): boolean => {
   return code === 1;
-}
+};

@@ -53,15 +53,15 @@ export const GlobalStyle = createGlobalStyle`
             line-height: 1;
         }
         h1 {
-            font-size: 2em;
+            font-size: 3rem;
             line-height: 1.2;
         }
         h2 {
-            font-size: 1.5em;
+            font-size: 2rem;
             line-height: 1.2;
         }
         h3 {
-            font-size: 1.17em;
+            font-size: 1.5em;
             line-height: 1.2;
         }
         h4 {
