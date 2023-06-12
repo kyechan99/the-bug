@@ -4,9 +4,9 @@ import { Direction, PlayerData } from "@type/position";
 import { CommandType, FoodObjType, GameMode, GameModeType } from "@type/game";
 
 /********************************************
- * 
+ *
  *      Map
- * 
+ *
  ********************************************/
 export const mapState = atom<number[][]>({
   key: "mapState",
@@ -18,9 +18,9 @@ export const foodState = atom<FoodObjType>({
 });
 
 /********************************************
- * 
+ *
  *      Player
- * 
+ *
  ********************************************/
 export const playerState = atom<PlayerData>({
   key: "playerState",
@@ -32,24 +32,26 @@ export const playerState = atom<PlayerData>({
 });
 
 /********************************************
- * 
+ *
  *      Command
- * 
+ *
  ********************************************/
-export const commandState = atom<CommandType[]>({
+export const commandState = atom<CommandType[][]>({
   key: "commandState",
   default: [],
 });
-export const curCommandState = atom<number>({
+export const curCommandState = atom<{ function: number; idx: number }>({
   key: "curCommandState",
-  default: 0,
+  default: {
+    function: 0,
+    idx: 0,
+  },
 });
 
-
 /********************************************
- * 
+ *
  *      Game
- * 
+ *
  ********************************************/
 export const gameState = atom<GameModeType>({
   key: "gameState",

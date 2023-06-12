@@ -23,7 +23,7 @@ export const FeatureButton = styled.button`
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.grey};
-    cursor: not-allowed; // disabled 상태일 때는 커서가 not-allowed로 변경됨
+    cursor: not-allowed;
   }
 `;
 export const ActButton = styled(FeatureButton)``;

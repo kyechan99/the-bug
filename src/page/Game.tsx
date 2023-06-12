@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import {
   commandState,
   curCommandState,
@@ -29,6 +34,7 @@ const Game = () => {
   const [player, setPlayer] = useRecoilState(playerState);
   const [food, setFood] = useRecoilState(foodState);
   const [curCommand, setCurCommand] = useRecoilState(curCommandState);
+  const resetCurCommand = useResetRecoilState(curCommandState);
 
   React.useEffect(() => {
     if (map.length > 0) {
@@ -62,7 +68,7 @@ const Game = () => {
   React.useEffect(() => {
     if (gameMode === GameMode.PLAYING) {
       refreshGame();
-      setCurCommand(0);
+      resetCurCommand();
     } else if (gameMode === GameMode.REFRESH) {
       refreshGame();
       setGameMode(GameMode.READY);
@@ -79,8 +85,8 @@ const Game = () => {
         return;
       }
 
-      if (curCommand >= command.length) {
-        setCurCommand(0);
+      if (curCommand.idx >= command[curCommand.function].length) {
+        resetCurCommand();
         setGameMode((prev) => {
           if (prev === GameMode.FAIL || prev === GameMode.SUCCESS) return prev;
           return GameMode.FAIL;
@@ -91,24 +97,34 @@ const Game = () => {
       if (
         isRoadCondition(
           roadDecryption(map[player.y][player.x]),
-          command[curCommand].condition
+          command[curCommand.function][curCommand.idx].condition
         )
       ) {
-        switch (command[curCommand].act) {
+        switch (command[curCommand.function][curCommand.idx].act) {
           case "MOVE":
             move();
             break;
           case "TURN_LEFT":
           case "TURN_RIGHT":
-            rotate(command[curCommand].act);
+            rotate(command[curCommand.function][curCommand.idx].act);
             break;
           case "F0":
-            setCurCommand(0);
+            setCurCommand((prev) => {
+              return {
+                ...prev,
+                idx: 0,
+              };
+            });
             return;
         }
       }
 
-      setCurCommand(curCommand + 1);
+      setCurCommand((prev) => {
+        return {
+          ...prev,
+          idx: prev.idx + 1,
+        };
+      });
     },
     gameMode === GameMode.PLAYING ? 1000 : null
   );
@@ -173,7 +189,14 @@ const Game = () => {
       y: data.start_position.y,
     });
 
-    setCommand(Array(data.function[0].limit).fill(initCommandData));
+    const arrays = [];
+    for (let i = 0; i < data.function.length; i++) {
+      arrays[i] = Array(data.function[i].limit).fill(initCommandData);
+    }
+
+    // 빈 배열로 초기화된 2차원 배열 생성
+    console.log(arrays);
+    setCommand(arrays);
     setGameMode(GameMode.READY);
   };
 

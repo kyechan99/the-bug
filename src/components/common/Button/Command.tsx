@@ -54,14 +54,14 @@ const CommandStyled = styled.button<CommandProps>`
   }}
 
   box-shadow: none;
-  transform: translate(3px, 3px);
+  transform: translate(0px, 0px);
 
   &.select {
     box-shadow: 0px 3px 0 0 ${({ theme }) => theme.colors.black};
     &:after {
       content: "^";
       position: absolute;
-      bottom: -1.5rem;
+      bottom: -1.25rem;
     }
   }
 `;

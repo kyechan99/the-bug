@@ -1,7 +1,13 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { commandState, curCommandState, gameState } from "@recoil/game/atom";
 import { IconEye } from "@tabler/icons-react";
-import { conditionType, conditionList, actType, actList, GameMode } from "@type/game";
+import {
+  conditionType,
+  conditionList,
+  actType,
+  actList,
+  GameMode,
+} from "@type/game";
 import { ActIcon } from "@common/Icon";
 import { ActButton, ConditionButton } from "@common/Button/Feature";
 
@@ -11,9 +17,9 @@ const GameFeature = () => {
   const curCommand = useRecoilValue(curCommandState);
 
   const actHandler = (code: actType) => {
-    const newStateArray = [...command];
-    newStateArray[curCommand] = {
-      ...newStateArray[curCommand],
+    const newStateArray = [...command].map((row) => [...row]);
+    newStateArray[curCommand.function][curCommand.idx] = {
+      ...newStateArray[curCommand.function][curCommand.idx],
       act: code,
     };
 
@@ -21,9 +27,9 @@ const GameFeature = () => {
   };
 
   const conditionHandler = (condition: conditionType) => {
-    const newStateArray = [...command];
-    newStateArray[curCommand] = {
-      ...newStateArray[curCommand],
+    const newStateArray = [...command].map((row) => [...row]);
+    newStateArray[curCommand.function][curCommand.idx] = {
+      ...newStateArray[curCommand.function][curCommand.idx],
       condition: condition,
     };
 
