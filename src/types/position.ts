@@ -1,8 +1,8 @@
 export const Direction = {
   UP: 0,
   LEFT: 1,
-  RIGHT: 2,
-  DOWN: 3,
+  DOWN: 2,
+  RIGHT: 3,
 } as const;
 export type DirectionType = (typeof Direction)[keyof typeof Direction];
 

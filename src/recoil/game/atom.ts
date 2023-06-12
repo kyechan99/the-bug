@@ -61,5 +61,5 @@ export const curCommandState = atom<number>({
  ********************************************/
 export const gameState = atom<GameModeType>({
   key: "gameState",
-  default: GameMode.READY,
+  default: GameMode.REFRESH,
 });

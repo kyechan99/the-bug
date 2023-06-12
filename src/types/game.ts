@@ -49,6 +49,8 @@ export const initCommandData: CommandType = {
 export const GameMode = {
   READY: "READY",
   PLAYING: "PLAYING",
-  REFRESH: "REFRESH"
+  REFRESH: "REFRESH",
+  SUCCESS: "SUCCESS",
+  FAIL: "FAIL"
 } as const;
 export type GameModeType = (typeof GameMode)[keyof typeof GameMode];

@@ -1,11 +1,12 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { commandState, curCommandState } from "@recoil/game/atom";
+import { commandState, curCommandState, gameState } from "@recoil/game/atom";
 import { IconEye } from "@tabler/icons-react";
-import { conditionType, conditionList, actType, actList } from "@type/game";
+import { conditionType, conditionList, actType, actList, GameMode } from "@type/game";
 import { ActIcon } from "@common/Icon";
 import { ActButton, ConditionButton } from "@common/Button/Feature";
 
 const GameFeature = () => {
+  const gameMode = useRecoilValue(gameState);
   const [command, setCommand] = useRecoilState(commandState);
   const curCommand = useRecoilValue(curCommandState);
 
@@ -38,6 +39,7 @@ const GameFeature = () => {
             onClick={() => {
               actHandler(a);
             }}
+            disabled={gameMode !== GameMode.READY}
           >
             <ActIcon icon={a}></ActIcon>
           </ActButton>
@@ -51,6 +53,7 @@ const GameFeature = () => {
             onClick={() => {
               conditionHandler(con);
             }}
+            disabled={gameMode !== GameMode.READY}
           >
             <IconEye />{" "}
           </ConditionButton>

@@ -13,3 +13,7 @@ export const roadDecryption = (code: number): RoadType => {
   }
   return "wall";
 };
+
+export const isWall = (code: number): boolean => {
+  return code === 1;
+}

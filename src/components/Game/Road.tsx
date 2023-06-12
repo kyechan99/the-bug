@@ -42,7 +42,6 @@ const VARIANTS = {
   `,
   wall: css`
     background: ${({ theme }) => theme.colors.grey};
-    opacity: 0.5;
   `,
   yellow: css`
     background: ${({ theme }) => theme.colors.primary};

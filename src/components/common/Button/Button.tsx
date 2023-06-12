@@ -31,6 +31,7 @@ export const Button = ({
   variant = "normal",
   borderRadius,
   withIcon = false,
+  holding = false,
   customStyle,
   disabled,
   children,
@@ -43,6 +44,7 @@ export const Button = ({
       type={type}
       disabled={disabled}
       variantStyle={variantStyle}
+      holding={holding}
       borderRadius={borderRadius}
       customStyle={customStyle}
       withIcon={withIcon}
@@ -56,6 +58,7 @@ export const Button = ({
 type StyledButtonProps = {
   borderRadius?: string;
   customStyle?: any;
+  holding?: boolean;
 };
 
 const StyledButton = styled.button<
@@ -74,6 +77,14 @@ const StyledButton = styled.button<
     color: ${({ theme }) => theme.colors.black};
     border: 2px solid ${({ theme }) => theme.colors.black};
     box-shadow: 0px 3px 0 0 ${({ theme }) => theme.colors.black};
+
+    ${(props) => {
+      if (props.holding)
+        return css`
+          box-shadow: inset 2px 2px rgba(0, 0, 0, 123);
+          transform: translate(2px, 3px);
+        `;
+    }}
 
     transition: .3s;
     &:hover {

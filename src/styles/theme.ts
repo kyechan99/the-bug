@@ -20,7 +20,7 @@ export type FontSizeTypes = typeof fonts;
 const colors = {
   primary: "#F0C40A",
   secondary: "#A3C2FF",
-  grey: "#bababa",
+  grey: "#d6d6d6",
   black: "#181B22",
   bg: "#FFF",
 };

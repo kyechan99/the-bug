@@ -33,7 +33,7 @@ export default GameCompiler;
 
 const CompilerStyled = styled.div`
   display: flex;
-  background: #ddd;
+  background: ${({ theme }) => theme.colors.grey};
   padding: 0.675rem 1.5rem 1rem 0.5rem;
   border-radius: 0.5rem;
   align-items: center;

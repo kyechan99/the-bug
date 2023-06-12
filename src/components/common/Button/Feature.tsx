@@ -14,9 +14,16 @@ export const FeatureButton = styled.button`
   margin: 1px 1px 4px 1px;
   box-shadow: 0px 3px 0 0 ${({ theme }) => theme.colors.black};
   transition: 0.3s;
-  &:hover {
+
+  &:hover:not([disabled]),
+  &:hover:not(.disabled) {
     box-shadow: none;
     transform: translate(0px, 3px);
+  }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.grey};
+    cursor: not-allowed; // disabled 상태일 때는 커서가 not-allowed로 변경됨
   }
 `;
 export const ActButton = styled(FeatureButton)``;
