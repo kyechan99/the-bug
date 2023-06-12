@@ -1,9 +1,10 @@
 import { RoadType } from "@type/road";
 import React from "react";
 import styled, { css } from "styled-components";
-import { useRecoilState } from "recoil";
-import { playerState, roadState } from "@recoil/game/atom";
+import { RecoilState, useRecoilState, useRecoilValue } from "recoil";
+import { foodState, playerState } from "@recoil/game/atom";
 import Player from "./Player";
+import { IconCandy } from "@tabler/icons-react";
 
 type RaodStyledProps = {
   variant: RoadType;
@@ -15,12 +16,21 @@ type RoadProps = RaodStyledProps & {
 };
 
 export const Road = ({ id, variant, children }: RoadProps) => {
-  const [road, setRoad] = useRecoilState(roadState(id));
+  // const [road, setRoad] = useRecoilState(roadState(id));
   const [player, setPlayer] = useRecoilState(playerState);
+  const food = useRecoilValue(foodState);
 
   return (
     <RoadStyled variant={variant} className="road">
-      {id === `${player.y}-${player.x}` ? <Player /> : <></>}
+      {id === `${player.y}-${player.x}` ? (
+        <Player />
+      ) : food[id] ? (
+        <Food>
+          <IconCandy width={16} height={16} />
+        </Food>
+      ) : (
+        <></>
+      )}
     </RoadStyled>
   );
 };
@@ -55,4 +65,11 @@ const RoadStyled = styled.div<RaodStyledProps>`
   ${(props) => {
     return VARIANTS[props.variant];
   }}
+`;
+
+const Food = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

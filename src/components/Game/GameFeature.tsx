@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { commandState, curCommandState } from "@recoil/game/atom";
 import { IconEye } from "@tabler/icons-react";
-import { conditionType, conditionList, actType, actList } from "@type/command";
+import { conditionType, conditionList, actType, actList } from "@type/game";
 import { ActIcon } from "@common/Icon";
 import { ActButton, ConditionButton } from "@common/Button/Feature";
 

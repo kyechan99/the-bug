@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 import { ActIcon } from "@common/Icon";
-import { CommandType } from "@type/command";
+import { CommandType } from "@type/game";
 
 interface CommandProps {
   variant: CommandType;

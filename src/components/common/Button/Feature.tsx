@@ -1,4 +1,4 @@
-import { conditionType } from "@type/command";
+import { conditionType } from "@type/game";
 import styled, { css } from "styled-components";
 
 export const FeatureButton = styled.button`

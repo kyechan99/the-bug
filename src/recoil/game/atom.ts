@@ -2,13 +2,34 @@ import { DefaultValue, atom, atomFamily, selector } from "recoil";
 
 import { RoadType } from "@type/road";
 import { Direction, PlayerData } from "@type/position";
-import { CommandType } from "@type/command";
+import { CommandType, GameMode, GameModeType } from "@type/game";
 
-export const roadState = atomFamily<RoadType, string>({
-  key: "roadState",
-  default: "none",
+/********************************************
+ * 
+ *      Map
+ * 
+ ********************************************/
+// export const roadState = atomFamily<RoadType, string>({
+//   key: "roadState",
+//   default: "none",
+// });
+type FoodObjType = {
+  [key: string]: boolean;
+};
+export const mapState = atom<number[][]>({
+  key: "mapState",
+  default: [],
+});
+export const foodState = atom<FoodObjType>({
+  key: "foodState",
+  default: {},
 });
 
+/********************************************
+ * 
+ *      Player
+ * 
+ ********************************************/
 export const playerState = atom<PlayerData>({
   key: "playerState",
   default: {
@@ -18,6 +39,11 @@ export const playerState = atom<PlayerData>({
   },
 });
 
+/********************************************
+ * 
+ *      Command
+ * 
+ ********************************************/
 export const commandState = atom<CommandType[]>({
   key: "commandState",
   default: [],
@@ -27,7 +53,13 @@ export const curCommandState = atom<number>({
   default: 0,
 });
 
-export const mapState = atom<number[][]>({
-  key: " mapState",
-  default: [],
+
+/********************************************
+ * 
+ *      Game
+ * 
+ ********************************************/
+export const gameState = atom<GameModeType>({
+  key: "gameState",
+  default: GameMode.READY,
 });

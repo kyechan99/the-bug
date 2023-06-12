@@ -6,7 +6,7 @@ import {
   IconEye,
   IconSpray,
 } from "@tabler/icons-react";
-import { actType, conditionType } from "@type/command";
+import { actType, conditionType } from "@type/game";
 import styled from "styled-components";
 
 export const ActIcon = ({ icon }: { icon: actType }) => {

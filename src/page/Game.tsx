@@ -1,19 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  commandState,
+  foodState,
+  mapState,
+  playerState,
+} from "@recoil/game/atom";
 
-import { initCommandData } from "@type/command";
+import { initCommandData } from "@type/game";
 import GameFeature from "@components/Game/GameFeature";
-import { commandState, mapState, playerState } from "@recoil/game/atom";
 import GameController from "@components/Game/GameController";
 import GameBoard from "@components/Game/GameBoard";
 import GameCompiler from "@components/Game/GameCompiler";
 
-import mapFile from "../data/example.json";
+type FoodObjType = {
+  [key: string]: boolean;
+};
 
 const Game = () => {
   const [maxCommandSize, setMaxCommandSize] = React.useState<number>(8);
   const setMap = useSetRecoilState(mapState);
+  const setFood = useSetRecoilState(foodState);
   const setPlayer = useSetRecoilState(playerState);
   const [command, setCommand] = useRecoilState(commandState);
 
@@ -27,10 +35,19 @@ const Game = () => {
 
   const initGame = () => {
     var data = require("../data/level_0/data_0.json");
-    console.log(data);
-    
+    console.log("MAP DATA", data);
+
     setMaxCommandSize(data.function[0].limit);
     setMap(data.map);
+
+    let foodData: FoodObjType = {};
+    for (let y = 0; y < data.food.length; y++) {
+      for (let x = 0; x < data.food[y].length; x++) {
+        if (data.food[y][x]) foodData[`${y}-${x}`] = true;
+      }
+    }
+    setFood(foodData);
+
     setPlayer({
       direction: data.start_direction,
       x: data.start_position.x,

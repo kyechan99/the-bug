@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { commandState, playerState } from "@recoil/game/atom";
+import { commandState, foodState, playerState } from "@recoil/game/atom";
 
-import { actType } from "@type/command";
+import { actType } from "@type/game";
 import { Direction } from "@type/position";
 import { Button } from "@common/Button/Button";
 import { IconPlayerPlayFilled, IconRefresh } from "@tabler/icons-react";
@@ -11,11 +11,16 @@ import { IconPlayerPlayFilled, IconRefresh } from "@tabler/icons-react";
 const GameController = () => {
   const [player, setPlayer] = useRecoilState(playerState);
   const command = useRecoilValue(commandState);
+  const [food, setFood] = useRecoilState(foodState);
 
   React.useEffect(() => {
+    const foodKey = `${player.y}-${player.x}`;
 
-    // console.log(player);
-
+    if (food[foodKey]) {
+      const newFoodState = { ...food };
+      delete newFoodState[foodKey];
+      setFood(newFoodState);
+    }
   }, [player]);
 
   const rotate = (act: actType) => {
@@ -36,15 +41,14 @@ const GameController = () => {
       return curPlayer;
     });
   };
-  
+
   const move = () => {
     setPlayer((prev) => {
       const curPlayer = { ...prev };
-      
+
       switch (curPlayer.direction) {
         case Direction.UP:
           curPlayer.y--;
-          console.log('3333', curPlayer);
           break;
         case Direction.LEFT:
           curPlayer.x--;
@@ -56,8 +60,6 @@ const GameController = () => {
           curPlayer.x++;
           break;
       }
-      
-      console.log('2', curPlayer);
 
       return curPlayer;
     });
@@ -72,7 +74,7 @@ const GameController = () => {
         stop();
         return;
       }
-      console.log('c', command[index]);
+      console.log("c", command[index]);
 
       switch (command[index].act) {
         case "MOVE":
@@ -107,7 +109,7 @@ const GameController = () => {
   };
 
   const controller = playCommand();
-  
+
   const playHandler = (e: any) => {
     e.preventDefault();
 
