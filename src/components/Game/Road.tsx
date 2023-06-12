@@ -5,6 +5,7 @@ import { RecoilState, useRecoilState, useRecoilValue } from "recoil";
 import { foodState, playerState } from "@recoil/game/atom";
 import Player from "./Player";
 import { IconCandy } from "@tabler/icons-react";
+import { posFormat } from "@utils/format";
 
 type RaodStyledProps = {
   variant: RoadType;
@@ -22,7 +23,7 @@ export const Road = ({ id, variant, children }: RoadProps) => {
 
   return (
     <RoadStyled variant={variant} className="road">
-      {id === `${player.y}-${player.x}` ? (
+      {id === posFormat(player.x, player.y) ? (
         <Player />
       ) : food[id] ? (
         <Food>

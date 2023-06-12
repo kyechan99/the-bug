@@ -7,6 +7,7 @@ import { actType } from "@type/game";
 import { Direction } from "@type/position";
 import { Button } from "@common/Button/Button";
 import { IconPlayerPlayFilled, IconRefresh } from "@tabler/icons-react";
+import { posFormat } from "@utils/format";
 
 const GameController = () => {
   const [player, setPlayer] = useRecoilState(playerState);
@@ -14,7 +15,7 @@ const GameController = () => {
   const [food, setFood] = useRecoilState(foodState);
 
   React.useEffect(() => {
-    const foodKey = `${player.y}-${player.x}`;
+    const foodKey = posFormat(player.x, player.y);
 
     if (food[foodKey]) {
       const newFoodState = { ...food };

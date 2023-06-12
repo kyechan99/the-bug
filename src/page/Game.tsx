@@ -13,6 +13,7 @@ import GameFeature from "@components/Game/GameFeature";
 import GameController from "@components/Game/GameController";
 import GameBoard from "@components/Game/GameBoard";
 import GameCompiler from "@components/Game/GameCompiler";
+import { posFormat } from "@utils/format";
 
 type FoodObjType = {
   [key: string]: boolean;
@@ -43,7 +44,7 @@ const Game = () => {
     let foodData: FoodObjType = {};
     for (let y = 0; y < data.food.length; y++) {
       for (let x = 0; x < data.food[y].length; x++) {
-        if (data.food[y][x]) foodData[`${y}-${x}`] = true;
+        if (data.food[y][x]) foodData[posFormat(x, y)] = true;
       }
     }
     setFood(foodData);

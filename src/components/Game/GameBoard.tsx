@@ -6,6 +6,7 @@ import { mapState } from "@recoil/game/atom";
 
 import { Road } from "./Road";
 import { roadDecryption } from "@utils/data";
+import { posFormat } from "@utils/format";
 
 const GameBoard = () => {
   const map = useRecoilValue(mapState);
@@ -18,8 +19,8 @@ const GameBoard = () => {
             {v.map((el, xIdx) => {
               return (
                 <Road
-                  id={`${yIdx}-${xIdx}`}
-                  key={`${yIdx}-${xIdx}`}
+                  id={posFormat(xIdx, yIdx)}
+                  key={posFormat(xIdx, yIdx)}
                   variant={roadDecryption(el)}
                 ></Road>
               );
