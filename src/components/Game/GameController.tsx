@@ -8,9 +8,15 @@ import { Direction } from "@type/position";
 import { Button } from "@common/Button/Button";
 import { IconPlayerPlayFilled, IconRefresh } from "@tabler/icons-react";
 
-const Controller = () => {
+const GameController = () => {
   const [player, setPlayer] = useRecoilState(playerState);
   const command = useRecoilValue(commandState);
+
+  React.useEffect(() => {
+
+    // console.log(player);
+
+  }, [player]);
 
   const rotate = (act: actType) => {
     setPlayer((prev) => {
@@ -34,20 +40,25 @@ const Controller = () => {
   const move = () => {
     setPlayer((prev) => {
       const curPlayer = { ...prev };
+      
       switch (curPlayer.direction) {
         case Direction.UP:
-          curPlayer.y++;
+          curPlayer.y--;
+          console.log('3333', curPlayer);
           break;
         case Direction.LEFT:
           curPlayer.x--;
           break;
         case Direction.DOWN:
-          curPlayer.y--;
+          curPlayer.y++;
           break;
         case Direction.RIGHT:
           curPlayer.x++;
           break;
       }
+      
+      console.log('2', curPlayer);
+
       return curPlayer;
     });
   };
@@ -61,8 +72,7 @@ const Controller = () => {
         stop();
         return;
       }
-
-      console.log(command[index]);
+      console.log('c', command[index]);
 
       switch (command[index].act) {
         case "MOVE":
@@ -95,7 +105,9 @@ const Controller = () => {
       stop,
     };
   };
+
   const controller = playCommand();
+  
   const playHandler = (e: any) => {
     e.preventDefault();
 
@@ -104,20 +116,20 @@ const Controller = () => {
   };
 
   return (
-    <GameController>
+    <GameControllerStyled>
       <Button onClick={playHandler}>
         <IconPlayerPlayFilled />
       </Button>
       <Button>
         <IconRefresh />
       </Button>
-    </GameController>
+    </GameControllerStyled>
   );
 };
 
-export default Controller;
+export default GameController;
 
-const GameController = styled.div`
+const GameControllerStyled = styled.div`
   display: flex;
   gap: 0.5rem;
 `;

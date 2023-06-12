@@ -11,7 +11,7 @@ interface CommandProps {
   children?: React.ReactNode;
 }
 
-export const Command = ({ variant, select, onClick }: CommandProps) => {
+const Command = ({ variant, select, onClick }: CommandProps) => {
   return (
     <CommandStyled
       variant={variant}
@@ -22,6 +22,7 @@ export const Command = ({ variant, select, onClick }: CommandProps) => {
     </CommandStyled>
   );
 };
+export default Command;
 
 const VARIANTS = {
   NONE: css`

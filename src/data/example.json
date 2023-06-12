@@ -1,0 +1,52 @@
+{
+  "level": 0,
+  "_level_comment": "Game level.",
+
+  "map": [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 4, 1],
+    [1, 0, 0, 0, 1],
+    [1, 3, 0, 0, 1],
+    [1, 1, 1, 1, 1]
+  ],
+  "_map_comment": "Map data.  See /utils/data.ts",
+
+  "food": [
+    [0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0]
+  ],
+  "_food_comment": "Set the location of food. It should be the same size as the map.",
+
+  "start_position": {
+    "x": 1,
+    "y": 3
+  },
+  "_start_position_comment": "The coordinates the player will start with.",
+  
+  "start_direction": 0,
+  "_start_direction_comment": "This is the direction the player first looks.  The top left corner is (0, 0).",
+
+  "active_command": [
+    "MOVE",
+    "TURN_LEFT",
+    "TURN_RIGHT",
+    "PAINTING_NONE",
+    "PAINTING_YELLOW",
+    "PAINTING_BLUE"
+  ],
+  "_active_command_comment": "Command to activate. See /types/command.ts/actList",
+
+  "active_condition": ["IF_YELLOW", "IF_BLUE"],
+  "_active_condition_comment": "Condition to activate. See /types/command.ts/conditionList",
+
+
+  "function": [
+    {
+      "limit": 6
+    }
+  ],
+  "_function_comment": "Add as many objects as the functions you want to activate. 'limit' is the maximum number of commands in the function."
+}

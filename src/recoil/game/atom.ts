@@ -26,3 +26,8 @@ export const curCommandState = atom<number>({
   key: "curCommandState",
   default: 0,
 });
+
+export const mapState = atom<number[][]>({
+  key: " mapState",
+  default: [],
+});
