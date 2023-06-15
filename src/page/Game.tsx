@@ -7,6 +7,7 @@ import {
   useSetRecoilState,
 } from "recoil";
 import {
+  availableCommandState,
   commandState,
   curCommandState,
   foodState,
@@ -34,6 +35,7 @@ const Game = () => {
   const [player, setPlayer] = useRecoilState(playerState);
   const [food, setFood] = useRecoilState(foodState);
   const [curCommand, setCurCommand] = useRecoilState(curCommandState);
+  const setAvailableCommand = useSetRecoilState(availableCommandState);
   const resetCurCommand = useResetRecoilState(curCommandState);
 
   React.useEffect(() => {
@@ -193,6 +195,8 @@ const Game = () => {
     for (let i = 0; i < data.function.length; i++) {
       arrays[i] = Array(data.function[i].limit).fill(initCommandData);
     }
+
+    setAvailableCommand(data.active_command + data.active_condition + ["NONE"]);
 
     // 빈 배열로 초기화된 2차원 배열 생성
     console.log(arrays);

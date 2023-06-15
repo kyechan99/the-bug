@@ -1,7 +1,14 @@
 import { DefaultValue, atom, atomFamily, selector } from "recoil";
 
 import { Direction, PlayerData } from "@type/position";
-import { CommandType, FoodObjType, GameMode, GameModeType } from "@type/game";
+import {
+  CommandType,
+  FoodObjType,
+  GameMode,
+  GameModeType,
+  actType,
+  conditionType,
+} from "@type/game";
 
 /********************************************
  *
@@ -46,6 +53,10 @@ export const curCommandState = atom<{ function: number; idx: number }>({
     function: 0,
     idx: 0,
   },
+});
+export const availableCommandState = atom<(actType | conditionType)[]>({
+  key: "availableCommandState",
+  default: [],
 });
 
 /********************************************

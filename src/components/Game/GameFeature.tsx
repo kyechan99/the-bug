@@ -1,5 +1,10 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { commandState, curCommandState, gameState } from "@recoil/game/atom";
+import {
+  availableCommandState,
+  commandState,
+  curCommandState,
+  gameState,
+} from "@recoil/game/atom";
 import { IconEye } from "@tabler/icons-react";
 import {
   conditionType,
@@ -7,6 +12,7 @@ import {
   actType,
   actList,
   GameMode,
+  CommandType,
 } from "@type/game";
 import { ActIcon } from "@common/Icon";
 import { ActButton, ConditionButton } from "@common/Button/Feature";
@@ -14,6 +20,7 @@ import { ActButton, ConditionButton } from "@common/Button/Feature";
 const GameFeature = () => {
   const gameMode = useRecoilValue(gameState);
   const [command, setCommand] = useRecoilState(commandState);
+  const availableCommand = useRecoilValue(availableCommandState);
   const curCommand = useRecoilValue(curCommandState);
 
   const actHandler = (code: actType) => {
@@ -39,31 +46,35 @@ const GameFeature = () => {
   return (
     <div>
       <div>
-        {actList.map((a) => (
-          <ActButton
-            key={a}
-            onClick={() => {
-              actHandler(a);
-            }}
-            disabled={gameMode !== GameMode.READY}
-          >
-            <ActIcon icon={a}></ActIcon>
-          </ActButton>
-        ))}
+        {actList
+          .filter((a) => availableCommand.includes(a))
+          .map((a) => (
+            <ActButton
+              key={a}
+              onClick={() => {
+                actHandler(a);
+              }}
+              disabled={gameMode !== GameMode.READY}
+            >
+              <ActIcon icon={a}></ActIcon>
+            </ActButton>
+          ))}
       </div>
       <div>
-        {conditionList.map((con) => (
-          <ConditionButton
-            key={con}
-            variant={con}
-            onClick={() => {
-              conditionHandler(con);
-            }}
-            disabled={gameMode !== GameMode.READY}
-          >
-            <IconEye />{" "}
-          </ConditionButton>
-        ))}
+        {conditionList
+          .filter((con) => availableCommand.includes(con))
+          .map((con) => (
+            <ConditionButton
+              key={con}
+              variant={con}
+              onClick={() => {
+                conditionHandler(con);
+              }}
+              disabled={gameMode !== GameMode.READY}
+            >
+              <IconEye />{" "}
+            </ConditionButton>
+          ))}
       </div>
     </div>
   );
