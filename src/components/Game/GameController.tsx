@@ -12,9 +12,11 @@ import {
   IconRefresh,
   IconTrophyFilled,
 } from "@tabler/icons-react";
+import { useCookies } from "react-cookie";
 
 const GameController = () => {
   const [gameMode, setGameMode] = useRecoilState(gameState);
+  const [cookies, setCookie] = useCookies(["game"]);
 
   const playHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -31,6 +33,11 @@ const GameController = () => {
     e.preventDefault();
 
     setGameMode(GameMode.REFRESH);
+  };
+
+  const nextStage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setCookie('game', cookies.game ? parseInt(cookies.game) + 1 : 1);
   };
 
   const isGamePlaying = () => {
@@ -55,7 +62,7 @@ const GameController = () => {
           <IconRefresh />
         </Button>
         {gameMode === GameMode.SUCCESS && (
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={nextStage}>
             <IconPlayerTrackNextFilled />
           </Button>
         )}

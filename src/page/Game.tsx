@@ -15,6 +15,7 @@ import {
   mapState,
   playerState,
 } from "@recoil/game/atom";
+import { useCookies } from "react-cookie";
 
 import GameFeature from "@components/Game/GameFeature";
 import GameController from "@components/Game/GameController";
@@ -37,6 +38,8 @@ const Game = () => {
   const [curCommand, setCurCommand] = useRecoilState(curCommandState);
   const setAvailableCommand = useSetRecoilState(availableCommandState);
   const resetCurCommand = useResetRecoilState(curCommandState);
+
+  const [cookies, setCookie] = useCookies(["game"]);
 
   React.useEffect(() => {
     if (map.length > 0) {
@@ -75,11 +78,15 @@ const Game = () => {
       refreshGame();
       setGameMode(GameMode.READY);
     } else if (gameMode === GameMode.INIT) {
-      initGame();
+      // initGame();
     } else if (gameMode === GameMode.SUCCESS) {
       console.log("GAME CLEAR !!! ");
     }
   }, [gameMode]);
+
+  React.useEffect(() => {
+    initGame();
+  }, [cookies.game]);
 
   useInterval(
     () => {
@@ -172,8 +179,9 @@ const Game = () => {
   };
 
   const initGame = () => {
-    var data = require("../data/level_0/data_0.json");
-    console.log("MAP DATA", data);
+    var data = require(`../data/level_0/data_${cookies.game || 0}.json`);
+    console.log(`%cSTAGE : ${cookies.game}`, "color: tomato;");
+    console.log(`MAP DATA`, data);
 
     setMap(data.map);
 
@@ -199,14 +207,13 @@ const Game = () => {
     setAvailableCommand(data.active_command + data.active_condition + ["NONE"]);
 
     // 빈 배열로 초기화된 2차원 배열 생성
-    console.log(arrays);
     setCommand(arrays);
     setGameMode(GameMode.READY);
+    resetCurCommand();
   };
 
   const refreshGame = () => {
-    var data = require("../data/level_0/data_0.json");
-    console.log("MAP DATA", data);
+    var data = require(`../data/level_0/data_${cookies.game || 0}.json`);
 
     setMap(data.map);
 
