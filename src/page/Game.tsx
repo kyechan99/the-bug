@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import {
   useRecoilState,
   useRecoilValue,
@@ -11,11 +13,11 @@ import {
   commandState,
   curCommandState,
   foodState,
+  gameRound,
   gameState,
   mapState,
   playerState,
 } from "@recoil/game/atom";
-import { useCookies } from "react-cookie";
 
 import GameFeature from "@components/Game/GameFeature";
 import GameController from "@components/Game/GameController";
@@ -25,21 +27,36 @@ import GameCompiler from "@components/Game/GameCompiler";
 import { useInterval } from "@hooks/useInterval";
 import { Direction } from "@type/position";
 import { FoodObjType, GameMode, actType, initCommandData } from "@type/game";
-import { isRoadCondition, isWall, roadDecryption } from "@utils/data";
+import {
+  isRoadCondition,
+  isWall,
+  levels,
+  modes,
+  roadDecryption,
+} from "@utils/data";
 import { posFormat } from "@utils/format";
 
 const Game = () => {
+  const { mode } = useParams<{ mode: modes }>();
+  const [cookies] = useCookies(["game"]);
+
+  const [mapList] = React.useState<number[]>(() => {
+    if (mode !== "practice" && mode !== "random" && mode !== undefined)
+      return Array.from(Array(levels[mode]).keys()).sort(
+        () => Math.random() - 0.5
+      );
+    return [];
+  });
+  const [round] = useRecoilState(gameRound);
+
   const [map, setMap] = useRecoilState(mapState);
   const [command, setCommand] = useRecoilState(commandState);
-
   const [gameMode, setGameMode] = useRecoilState(gameState);
   const [player, setPlayer] = useRecoilState(playerState);
   const [food, setFood] = useRecoilState(foodState);
   const [curCommand, setCurCommand] = useRecoilState(curCommandState);
   const setAvailableCommand = useSetRecoilState(availableCommandState);
   const resetCurCommand = useResetRecoilState(curCommandState);
-
-  const [cookies, setCookie] = useCookies(["game"]);
 
   React.useEffect(() => {
     if (map.length > 0) {
@@ -86,7 +103,7 @@ const Game = () => {
 
   React.useEffect(() => {
     initGame();
-  }, [cookies.game]);
+  }, [cookies.game, round, mapList]);
 
   useInterval(
     () => {
@@ -179,25 +196,11 @@ const Game = () => {
   };
 
   const initGame = () => {
-    var data = require(`../data/level_0/data_${cookies.game || 0}.json`);
-    console.log(`%cSTAGE : ${cookies.game}`, "color: tomato;");
+    var data = refreshGame();
+    if (data === null) return;
+
+    console.log(`%cROUND : ${cookies.game || 0}`, "color: cyan;");
     console.log(`MAP DATA`, data);
-
-    setMap(data.map);
-
-    let foodData: FoodObjType = {};
-    for (let y = 0; y < data.food.length; y++) {
-      for (let x = 0; x < data.food[y].length; x++) {
-        if (data.food[y][x]) foodData[posFormat(x, y)] = true;
-      }
-    }
-    setFood(foodData);
-
-    setPlayer({
-      direction: data.start_direction,
-      x: data.start_position.x,
-      y: data.start_position.y,
-    });
 
     const arrays = [];
     for (let i = 0; i < data.function.length; i++) {
@@ -213,7 +216,23 @@ const Game = () => {
   };
 
   const refreshGame = () => {
-    var data = require(`../data/level_0/data_${cookies.game || 0}.json`);
+    /*
+      mode = 'practice' | 'random' | 'level_*'
+    */
+    var data;
+    if (mode === "practice") {
+      data = require(`../data/${mode}/data_${cookies.game || 0}.json`);
+    } else if (mode?.startsWith("level_")) {
+      data = require(`../data/${mode}/data_${mapList[round]}.json`);
+    } else {
+      /* else if (mode === "random") {
+    //  TODO: Make Random Mode
+    }*/
+      console.error(
+        `WRONG DATA PATH\n- mode : ${mode}\n-round : ${cookies.game || 0}`
+      );
+      return null;
+    }
 
     setMap(data.map);
 
@@ -230,11 +249,13 @@ const Game = () => {
       x: data.start_position.x,
       y: data.start_position.y,
     });
+
+    return data;
   };
 
   return (
     <GameContainer>
-      <h2>ROUND 1</h2>
+      <h2>ROUND {round + 1}</h2>
       <GameBoard />
       <GameFeature />
       <GameCompiler />

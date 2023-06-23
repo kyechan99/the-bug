@@ -1,0 +1,34 @@
+{
+  "level": 0,
+  "map": [
+    [1, 1, 1, 1, 1, 1],
+    [1, 4, 0, 0, 4, 1],
+    [1, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1]
+  ],
+  "food": [
+    [0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0]
+  ],
+  "start_position": {
+    "x": 1,
+    "y": 3
+  },
+  "start_direction": 0,
+  "active_command": [
+    "MOVE",
+    "TURN_LEFT",
+    "TURN_RIGHT",
+    "F0"
+  ],
+  "active_condition": ["IF_YELLOW", "IF_BLUE"],
+  "function": [
+    {
+      "limit": 3
+    }
+  ]
+}

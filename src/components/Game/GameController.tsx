@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { gameState } from "@recoil/game/atom";
+import { gameRound, gameState } from "@recoil/game/atom";
 
 import { GameMode } from "@type/game";
 import { Button } from "@common/Button/Button";
@@ -13,10 +13,13 @@ import {
   IconTrophyFilled,
 } from "@tabler/icons-react";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 
 const GameController = () => {
-  const [gameMode, setGameMode] = useRecoilState(gameState);
+  const { mode } = useParams();
   const [cookies, setCookie] = useCookies(["game"]);
+  const [gameMode, setGameMode] = useRecoilState(gameState);
+  const [round, setRound] = useRecoilState(gameRound);
 
   const playHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -35,9 +38,14 @@ const GameController = () => {
     setGameMode(GameMode.REFRESH);
   };
 
-  const nextStage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const nextRound = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setCookie('game', cookies.game ? parseInt(cookies.game) + 1 : 1);
+    if (mode === 'practice')
+      setCookie('game', cookies.game ? parseInt(cookies.game) + 1 : 1);
+    else if (mode?.startsWith("level_")) {
+      setRound(round + 1);
+    }
+
   };
 
   const isGamePlaying = () => {
@@ -62,7 +70,7 @@ const GameController = () => {
           <IconRefresh />
         </Button>
         {gameMode === GameMode.SUCCESS && (
-          <Button variant="secondary" onClick={nextStage}>
+          <Button variant="secondary" onClick={nextRound}>
             <IconPlayerTrackNextFilled />
           </Button>
         )}

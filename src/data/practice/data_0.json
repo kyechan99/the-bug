@@ -1,0 +1,25 @@
+{
+  "level": 0,
+  "map": [
+    [1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1]
+  ],
+  "food": [
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0]
+  ],
+  "start_position": {
+    "x": 1,
+    "y": 1
+  },
+  "start_direction": 3,
+  "active_command": [
+    "MOVE"
+  ],
+  "active_condition": [],
+  "function": [
+    {
+      "limit": 3
+    }
+  ]
+}

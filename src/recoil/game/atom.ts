@@ -68,3 +68,7 @@ export const gameState = atom<GameModeType>({
   key: "gameState",
   default: GameMode.INIT,
 });
+export const gameRound = atom<number>({
+  key:" gameRound",
+  default: 0,
+});

@@ -34,3 +34,11 @@ export const isRoadCondition = (road: RoadType, condition: conditionType) => {
 export const isWall = (code: number): boolean => {
   return code === 1;
 };
+
+// number of files
+export const levels = {
+  level_0: 2,
+  level_1: 2,
+  level_2: 3,
+}
+export type modes = 'practice' | 'level_0' | 'level_1' | 'level_2' | 'random';
