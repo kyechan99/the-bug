@@ -33,13 +33,15 @@ const Main = () => {
             <LevelLink>
               {Object.keys(levels).map((level) => (
                 <Link to={`/game/${level}`}>
-                  <Button>{level.replace('level_', '')}</Button>
+                  <Button>{level.replace("level_", "")}</Button>
                 </Link>
               ))}
             </LevelLink>
           )}
         </LevelBlock>
-        <Button variant="transparent">Editor</Button>
+        <Link to="/editor">
+          <Button variant="transparent">Editor</Button>
+        </Link>
       </MenuList>
     </div>
   );
