@@ -83,7 +83,7 @@ const CompilerStyled = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 const Function = styled.div`

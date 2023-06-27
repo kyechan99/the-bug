@@ -90,6 +90,62 @@ const Editor = () => {
     setData({ ...data, map: arrays });
   };
 
+  const changeStartPosition = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (name === "player_x") {
+      setPlayer({ ...player, x: parseInt(value) });
+      setData({
+        ...data,
+        start_position: { ...data.start_position, x: parseInt(value) },
+      });
+    } else {
+      setPlayer({ ...player, y: parseInt(value) });
+      setData({
+        ...data,
+        start_position: { ...data.start_position, y: parseInt(value) },
+      });
+    }
+  };
+
+  const refreshCommand = (functions: any) => {
+    const arrays = [];
+    for (let i = 0; i < functions.length; i++) {
+      arrays[i] = Array(functions[i].limit).fill(initCommandData);
+    }
+    setCommand(arrays);
+  }
+
+  const handleFunctionAdd = () => {
+    const newArray = [...data.function, { limit: 1 }];
+    setData({
+      ...data,
+      function: newArray,
+    });
+    refreshCommand(newArray);
+    
+  };
+
+  const handleFunctionRemove = (index: number) => {
+    const newArray = [...data.function];
+    newArray.splice(index, 1);
+    setData({
+      ...data,
+      function: newArray,
+    });
+    refreshCommand(newArray);
+  };
+
+  const handleFunctionLimitChange = (index: number, value: number) => {
+    const newArray = [...data.function];
+    newArray[index].limit = Number(value);
+    setData({
+      ...data,
+      function: newArray,
+    });
+    refreshCommand(newArray);
+  };
+
   return (
     <div>
       <Hero>
@@ -104,27 +160,59 @@ const Editor = () => {
         <GameCompiler />
       </GameContainer>
 
-      <BoardSizeInputBlock>
-        <input
-          type="number"
+      <InputGroup>
+        <Label>Board Size :</Label>
+        <InputNumber
           name="board_height"
-          step="1"
-          min="4"
-          max="20"
+          min={4}
           value={data.map.length || 4}
           onChange={changeBoardSize}
         />
         x
-        <input
-          type="number"
+        <InputNumber
           name="board_width"
-          step="1"
-          min="4"
-          max="20"
+          min={4}
           value={data.map[0].length}
           onChange={changeBoardSize}
         />
-      </BoardSizeInputBlock>
+      </InputGroup>
+
+      <InputGroup>
+        <Label>Start Position :</Label>
+        <InputNumber
+          name="player_x"
+          min={0}
+          value={player.x}
+          onChange={changeStartPosition}
+        />
+        ,
+        <InputNumber
+          name="player_y"
+          min={0}
+          value={player.y}
+          onChange={changeStartPosition}
+        />
+      </InputGroup>
+
+      <InputGroup>
+        <div>
+          <Label>Functions :</Label>
+          {data.function.map((item, index) => (
+            <div key={index}>
+              <label>F{index} : </label>
+              <InputNumber
+                value={item.limit}
+                min={1}
+                onChange={(e) =>
+                  handleFunctionLimitChange(index, parseInt(e.target.value))
+                }
+              />
+              <RemoveButton onClick={() => handleFunctionRemove(index)}>-</RemoveButton>
+            </div>
+          ))}
+          <AddButton onClick={handleFunctionAdd}>+</AddButton>
+        </div>
+      </InputGroup>
 
       <PrettyPrintJson data={data} />
     </div>
@@ -145,4 +233,39 @@ const GameContainer = styled.div`
   gap: 2rem;
 `;
 
-const BoardSizeInputBlock = styled.div``;
+const InputGroup = styled.div`
+  margin: 0.25rem 0rem;
+`;
+
+const Label = styled.label`
+  font-family: "Lilita One", sans-serif;
+  margin-right: 0.5rem;
+`;
+
+const InputNumber = styled.input.attrs((props) => ({
+  type: "number",
+  step: 1,
+  min: props.min,
+  max: 20,
+}))`
+  width: 2.75rem;
+  height: 2rem;
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: 0.5rem;
+  text-align: center;
+`;
+
+const RemoveButton = styled.button`
+  background: ${({ theme }) => theme.colors.grey};
+  border: none;
+  margin: 0rem 0.125rem;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+`;
+const AddButton = styled.button`
+  background: ${({ theme }) => theme.colors.grey};
+  border: none;
+  margin: 0.25rem 0.125rem;
+  border-radius: 0rem 0rem 0.5rem 0.5rem;
+  padding: 0.25rem 3rem;
+`;
