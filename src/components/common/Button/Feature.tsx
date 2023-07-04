@@ -21,6 +21,9 @@ export const FeatureButton = styled.button`
     transform: translate(0px, 3px);
   }
 
+  &.disabled {
+    background-color: ${({ theme }) => theme.colors.grey};
+  }
   &:disabled {
     background-color: ${({ theme }) => theme.colors.grey};
     cursor: not-allowed;

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { IconBug } from "@tabler/icons-react";
 import { levels } from "@utils/data";
 import GameCompiler from "@components/Game/GameCompiler";
-import GameFeature from "@components/Game/GameFeature";
+import EditorGameFeature from "@components/Game/EditorGameFeature";
 import GameBoard from "@components/Game/GameBoard";
 import { FoodObjType, conditionType, initCommandData } from "@type/game";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -156,7 +156,7 @@ const Editor = () => {
 
       <GameContainer>
         <GameBoard />
-        <GameFeature />
+        <EditorGameFeature data={data} setData={setData}/>
         <GameCompiler />
       </GameContainer>
 
