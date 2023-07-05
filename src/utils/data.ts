@@ -7,13 +7,27 @@ export const roadDecryption = (code: number): RoadType => {
       return "none";
     case 1:
       return "wall";
-    case 3:
+    case 2:
       return "yellow";
-    case 4:
+    case 3:
       return "blue";
   }
   return "wall";
 };
+
+export const roadEncryption = (code: string): number => {
+  switch (code) {
+    case "none":
+      return 0;
+    case "wall":
+      return 1;
+    case "yellow":
+      return 2;
+    case "blue":
+      return 3;
+  }
+  return 1;
+}
 
 export const isRoadCondition = (road: RoadType, condition: conditionType) => {
   if (condition === "NONE") return true;
@@ -22,9 +36,9 @@ export const isRoadCondition = (road: RoadType, condition: conditionType) => {
     condition: conditionType;
     road: RoadType;
   }[] = [
-    { condition: "IF_YELLOW", road: "yellow" },
-    { condition: "IF_BLUE", road: "blue" },
-  ];
+      { condition: "IF_YELLOW", road: "yellow" },
+      { condition: "IF_BLUE", road: "blue" },
+    ];
 
   return conditions.some(
     (item) => item.condition === condition && item.road === road

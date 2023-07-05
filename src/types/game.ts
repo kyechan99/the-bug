@@ -12,6 +12,15 @@ export const actList = [
   "PAINTING_YELLOW",
   "PAINTING_BLUE",
   "F0",
+  "F1",
+  "F2",
+  "F3",
+  "F4",
+  "F5",
+  "F6",
+  "F7",
+  "F8",
+  "F9",
 ] as const;
 export type actType = (typeof actList)[number];
 

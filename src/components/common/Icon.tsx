@@ -3,11 +3,33 @@ import {
   IconCornerUpLeft,
   IconCornerUpRight,
   IconHexagonNumber0,
+  IconHexagonNumber1,
+  IconHexagonNumber2,
+  IconHexagonNumber3,
+  IconHexagonNumber4,
+  IconHexagonNumber5,
+  IconHexagonNumber6,
+  IconHexagonNumber7,
+  IconHexagonNumber8,
+  IconHexagonNumber9,
   IconEye,
   IconSpray,
 } from "@tabler/icons-react";
 import { actType, conditionType } from "@type/game";
 import styled from "styled-components";
+
+const icons = [
+  IconHexagonNumber0,
+  IconHexagonNumber1,
+  IconHexagonNumber2,
+  IconHexagonNumber3,
+  IconHexagonNumber4,
+  IconHexagonNumber5,
+  IconHexagonNumber6,
+  IconHexagonNumber7,
+  IconHexagonNumber8,
+  IconHexagonNumber9,
+];
 
 export const ActIcon = ({ icon }: { icon: actType }) => {
   switch (icon) {
@@ -17,8 +39,6 @@ export const ActIcon = ({ icon }: { icon: actType }) => {
       return <IconCornerUpLeft />;
     case "TURN_RIGHT":
       return <IconCornerUpRight />;
-    case "F0":
-      return <IconHexagonNumber0 />;
     case "PAINTING_NONE":
       return <IconSpray />;
     case "PAINTING_YELLOW":
@@ -33,9 +53,18 @@ export const ActIcon = ({ icon }: { icon: actType }) => {
           <IconSpray color="var(--secondaryColor)" />
         </IconWrapper>
       );
-    default:
-      return <IconEmpty />;
   }
+
+  if (icon[0] === 'F') {
+    const fNum = parseInt(icon[1]);
+    if (0 <= fNum && fNum <= icons.length) {
+      const IconComponent = icons[fNum];
+      return <IconComponent />;
+    }
+  }
+
+  return <IconEmpty />;
+
 };
 
 export const ConditionIcon = ({ icon }: { icon: conditionType }) => {

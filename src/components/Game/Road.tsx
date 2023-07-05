@@ -4,12 +4,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { foodState, playerState } from "@recoil/game/atom";
 
 import Player from "./Player";
-import { IconCandy } from "@tabler/icons-react";
+import Food from "./Food";
 
 import { posFormat } from "@utils/format";
 import { RoadType } from "@type/road";
 
 type RaodStyledProps = {
+  onClick?: () => void;
   variant: RoadType;
 };
 
@@ -18,20 +19,18 @@ type RoadProps = RaodStyledProps & {
   children?: React.ReactNode;
 };
 
-export const Road = ({ id, variant, children }: RoadProps) => {
+export const Road = ({ id, variant, onClick, children }: RoadProps) => {
   const player = useRecoilValue(playerState);
   const food = useRecoilValue(foodState);
 
   return (
-    <RoadStyled variant={variant} className="road">
+    <RoadStyled variant={variant} className="road" onClick={onClick}>
       {id === posFormat(player.x, player.y) ? (
         <Player />
       ) : food[id] ? (
-        <Food>
-          <IconCandy width={16} height={16} />
-        </Food>
+        <Food />
       ) : (
-        <></>
+        children
       )}
     </RoadStyled>
   );
@@ -66,11 +65,7 @@ const RoadStyled = styled.div<RaodStyledProps>`
   ${(props) => {
     return VARIANTS[props.variant];
   }}
-`;
-
-const Food = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  ${(props) => {
+    if (props.onClick) return css`cursor: pointer`;
+  }}
 `;

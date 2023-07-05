@@ -5,10 +5,10 @@ import { Button } from "@common/Button/Button";
 import { H1 } from "@common/Heading/Heading";
 import { Link } from "react-router-dom";
 import { IconBug } from "@tabler/icons-react";
-import { levels } from "@utils/data";
+import { levels, roadEncryption } from "@utils/data";
 import GameCompiler from "@components/Game/GameCompiler";
 import EditorGameFeature from "@components/Game/EditorGameFeature";
-import GameBoard from "@components/Game/GameBoard";
+import EditorGameBoard from "@components/Game/EditorGameBoard";
 import { FoodObjType, conditionType, initCommandData } from "@type/game";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
@@ -85,9 +85,11 @@ const Editor = () => {
     }
 
     const arrays = Array.from(Array(height), () => Array(width).fill(1));
+    const foods = Array.from(Array(height), () => Array(width).fill(0));
 
     setMap(arrays);
-    setData({ ...data, map: arrays });
+    setFood({});
+    setData({ ...data, map: arrays, food: foods });
   };
 
   const changeStartPosition = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,7 +125,7 @@ const Editor = () => {
       function: newArray,
     });
     refreshCommand(newArray);
-    
+
   };
 
   const handleFunctionRemove = (index: number) => {
@@ -146,6 +148,31 @@ const Editor = () => {
     refreshCommand(newArray);
   };
 
+  const setRoadType = (xIdx: number, yIdx: number, roadType: string) => {
+    if (["food", 'empty_food'].includes(roadType)) {
+      const isFood = roadType === "food" ? true : false;
+      
+      var newFoodMap = data.food.map(v => [...v]);
+      newFoodMap[yIdx][xIdx] = isFood ? 1:0;
+      setFood(prev => { return { ...prev, [posFormat(xIdx, yIdx)]: isFood } });
+
+      setData({
+        ...data,
+        food: newFoodMap,
+      });
+    } else {
+      var newMap = map.map(v => [...v]);
+
+      newMap[yIdx][xIdx] = roadEncryption(roadType);
+      setMap(newMap);
+
+      setData({
+        ...data,
+        map: newMap,
+      });
+    }
+  }
+
   return (
     <div>
       <Hero>
@@ -155,8 +182,8 @@ const Editor = () => {
       </Hero>
 
       <GameContainer>
-        <GameBoard />
-        <EditorGameFeature data={data} setData={setData}/>
+        <EditorGameBoard setRoadType={setRoadType} />
+        <EditorGameFeature data={data} setData={setData} />
         <GameCompiler />
       </GameContainer>
 
