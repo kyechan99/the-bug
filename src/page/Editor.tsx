@@ -1,15 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
-import { Button } from "@common/Button/Button";
-import { H1 } from "@common/Heading/Heading";
-import { Link } from "react-router-dom";
-import { IconBug } from "@tabler/icons-react";
-import { levels, roadEncryption } from "@utils/data";
-import GameCompiler from "@components/Game/GameCompiler";
-import EditorGameFeature from "@components/Game/EditorGameFeature";
-import EditorGameBoard from "@components/Game/EditorGameBoard";
-import { FoodObjType, conditionType, initCommandData } from "@type/game";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   availableCommandState,
@@ -18,17 +8,22 @@ import {
   mapState,
   playerState,
 } from "@recoil/game/atom";
-import { posFormat } from "@utils/format";
-import dataFileType from "@type/data";
+
+import { H1 } from "@common/Heading/Heading";
+import { IconBug } from "@tabler/icons-react";
+import GameCompiler from "@components/Game/GameCompiler";
+import EditorGameFeature from "@components/Game/EditorGameFeature";
+import EditorGameBoard from "@components/Game/EditorGameBoard";
 import { InputGroup, InputNumber } from "@common/Form/Input";
 import Label from "@common/Form/Label";
+import PrettyPrintJson from "@components/PrettyPrintJson";
 
-const initData = require(`../data/example.json`);
+import dataFileType from "@type/data";
+import { FoodObjType, conditionType, initCommandData } from "@type/game";
+import { posFormat } from "@utils/format";
+import { roadEncryption } from "@utils/data";
 
-const PrettyPrintJson = ({ data }: { data: dataFileType }) => {
-  return <div>{JSON.stringify(data)}</div>;
-  return <div>{/* <pre>{JSON.stringify(data, null, 2)}</pre> */}</div>;
-};
+const initData = require(`../data/base.json`);
 
 const Editor = () => {
   const [map, setMap] = useRecoilState(mapState);

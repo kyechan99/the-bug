@@ -39,8 +39,8 @@ export default App;
 const AppContainer = styled.div`
   text-align: center;
 
-  top: 30%;
+  top: 10%;
   left: 50%;
   position: absolute;
-  transform: translate(-50%, -30%);
+  transform: translate(-50%, 0%);
 `;

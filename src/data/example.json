@@ -42,7 +42,6 @@
   "active_condition": ["IF_YELLOW", "IF_BLUE"],
   "_active_condition_comment": "Condition to activate. See /types/command.ts/conditionList",
 
-
   "function": [
     {
       "limit": 6

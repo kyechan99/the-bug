@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Button } from "@common/Button/Button";
 import { H1 } from "@common/Heading/Heading";
 import { Link } from "react-router-dom";
-import { IconBug } from "@tabler/icons-react";
+import { IconBrandGithub, IconBug } from "@tabler/icons-react";
 import { levels } from "@utils/data";
 
 const Main = () => {
@@ -41,6 +41,11 @@ const Main = () => {
         </LevelBlock>
         <Link to="/editor">
           <Button variant="transparent">Editor</Button>
+        </Link>
+        <Link to="https://github.com/kyechan99/the-bug" target="_blank">
+          <Button withIcon>
+            <IconBrandGithub className="" />
+          </Button>
         </Link>
       </MenuList>
     </div>
