@@ -8,6 +8,7 @@ import { roadDecryption } from "@utils/data";
 import { posFormat } from "@utils/format";
 import Food, { EmptyFood } from "./Food";
 import { Roads } from "@type/road";
+import Label from "@common/Form/Label";
 
 type EditorGameBoardProps = {
   setRoadType: (xIdx: number, yIdx: number, roadType: string) => void;
@@ -27,8 +28,8 @@ const EditorGameBoard = ({ setRoadType }: EditorGameBoardProps) => {
 
   return (
     <div>
-      <div>
-        <label>Road Type :</label>
+      <EditMenus>
+        <Label>Road Type :</Label>
         {
           Roads.map(road =>
             <Road
@@ -36,6 +37,7 @@ const EditorGameBoard = ({ setRoadType }: EditorGameBoardProps) => {
               id={posFormat(-1, -1)}
               onClick={() => { selectRoad(road) }}
               variant={road}
+              className={curRoadType === road ? 'select' : ''}
             />
           )
         }
@@ -43,6 +45,7 @@ const EditorGameBoard = ({ setRoadType }: EditorGameBoardProps) => {
           id={posFormat(-1, -1)}
           onClick={() => { selectRoad("food") }}
           variant={"none"}
+          className={curRoadType === 'food' ? 'select' : ''}
         >
           <Food />
         </Road>
@@ -50,10 +53,11 @@ const EditorGameBoard = ({ setRoadType }: EditorGameBoardProps) => {
           id={posFormat(-1, -1)}
           onClick={() => { selectRoad("empty_food") }}
           variant={"none"}
+          className={curRoadType === 'empty_food' ? 'select' : ''}
         >
           <EmptyFood />
         </Road>
-      </div>
+      </EditMenus>
 
       <GameBoardStyled>
         {map.map((v, yIdx) => {
@@ -78,6 +82,10 @@ const EditorGameBoard = ({ setRoadType }: EditorGameBoardProps) => {
   );
 };
 export default EditorGameBoard;
+
+const EditMenus = styled.div`
+  margin-bottom: 1rem;
+`;
 
 const GameBoardStyled = styled.div``;
 

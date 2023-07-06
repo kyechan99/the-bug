@@ -20,6 +20,8 @@ import {
 } from "@recoil/game/atom";
 import { posFormat } from "@utils/format";
 import dataFileType from "@type/data";
+import { InputGroup, InputNumber } from "@common/Form/Input";
+import Label from "@common/Form/Label";
 
 const initData = require(`../data/example.json`);
 
@@ -151,9 +153,9 @@ const Editor = () => {
   const setRoadType = (xIdx: number, yIdx: number, roadType: string) => {
     if (["food", 'empty_food'].includes(roadType)) {
       const isFood = roadType === "food" ? true : false;
-      
+
       var newFoodMap = data.food.map(v => [...v]);
-      newFoodMap[yIdx][xIdx] = isFood ? 1:0;
+      newFoodMap[yIdx][xIdx] = isFood ? 1 : 0;
       setFood(prev => { return { ...prev, [posFormat(xIdx, yIdx)]: isFood } });
 
       setData({
@@ -258,28 +260,6 @@ const GameContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
-`;
-
-const InputGroup = styled.div`
-  margin: 0.25rem 0rem;
-`;
-
-const Label = styled.label`
-  font-family: "Lilita One", sans-serif;
-  margin-right: 0.5rem;
-`;
-
-const InputNumber = styled.input.attrs((props) => ({
-  type: "number",
-  step: 1,
-  min: props.min,
-  max: 20,
-}))`
-  width: 2.75rem;
-  height: 2rem;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 0.5rem;
-  text-align: center;
 `;
 
 const RemoveButton = styled.button`

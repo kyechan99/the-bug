@@ -16,22 +16,26 @@ type RaodStyledProps = {
 
 type RoadProps = RaodStyledProps & {
   id: string;
+  className?: string;
   children?: React.ReactNode;
 };
 
-export const Road = ({ id, variant, onClick, children }: RoadProps) => {
+export const Road = ({ id, className, variant, onClick, children }: RoadProps) => {
   const player = useRecoilValue(playerState);
   const food = useRecoilValue(foodState);
 
   return (
-    <RoadStyled variant={variant} className="road" onClick={onClick}>
-      {id === posFormat(player.x, player.y) ? (
-        <Player />
-      ) : food[id] ? (
-        <Food />
-      ) : (
-        children
-      )}
+    <RoadStyled variant={variant} onClick={onClick}
+      className={`road ${className ? className : ''}`}>
+      <RoadWrapper>
+        {id === posFormat(player.x, player.y) ? (
+          <Player />
+        ) : food[id] ? (
+          <Food />
+        ) : (
+          children
+        )}
+      </RoadWrapper>
     </RoadStyled>
   );
 };
@@ -62,10 +66,20 @@ const RoadStyled = styled.div<RaodStyledProps>`
   flex-basis: 100%;
   border-radius: 0.125rem;
   margin: 1px;
+  &.select {
+    box-shadow: 0px 3px 0 0 ${({ theme }) => theme.colors.black};
+  }
   ${(props) => {
     return VARIANTS[props.variant];
   }}
   ${(props) => {
     if (props.onClick) return css`cursor: pointer`;
   }}
+`;
+
+const RoadWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

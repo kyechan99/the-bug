@@ -3,25 +3,14 @@ import { IconCandy, IconCandyOff } from "@tabler/icons-react";
 
 const Food = () => {
     return (
-        <FoodStyled>
-            <IconCandy width={16} height={16} />
-        </FoodStyled>
+        <IconCandy width={16} height={16} />
     )
 }
 
 export const EmptyFood = () => {
     return (
-        <FoodStyled>
-            <IconCandyOff width={16} height={16} />
-        </FoodStyled>
+        <IconCandyOff width={16} height={16} />
     )
 }
 
 export default Food;
-
-const FoodStyled = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
