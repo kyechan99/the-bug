@@ -75,6 +75,8 @@ const Editor = () => {
 
     const { name, value } = e.target;
 
+    if (parseInt(value) < 4) return;
+
     if (name === "board_height") {
       height = parseInt(value);
     } else {
@@ -105,6 +107,15 @@ const Editor = () => {
         start_position: { ...data.start_position, y: parseInt(value) },
       });
     }
+  };
+
+  const changeLevel = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setData({
+      ...data,
+      level: parseInt(value)
+    });
   };
 
   const refreshCommand = (functions: any) => {
@@ -179,64 +190,76 @@ const Editor = () => {
       </Hero>
 
       <GameContainer>
+
         <EditorGameBoard setRoadType={setRoadType} />
         <EditorGameFeature data={data} setData={setData} />
         <GameCompiler />
-      </GameContainer>
 
-      <InputGroup>
-        <Label>Board Size :</Label>
-        <InputNumber
-          name="board_height"
-          min={4}
-          value={data.map.length || 4}
-          onChange={changeBoardSize}
-        />
-        x
-        <InputNumber
-          name="board_width"
-          min={4}
-          value={data.map[0].length}
-          onChange={changeBoardSize}
-        />
-      </InputGroup>
-
-      <InputGroup>
-        <Label>Start Position :</Label>
-        <InputNumber
-          name="player_x"
-          min={0}
-          value={player.x}
-          onChange={changeStartPosition}
-        />
-        ,
-        <InputNumber
-          name="player_y"
-          min={0}
-          value={player.y}
-          onChange={changeStartPosition}
-        />
-      </InputGroup>
-
-      <InputGroup>
         <div>
-          <Label>Functions :</Label>
-          {data.function.map((item, index) => (
-            <div key={index}>
-              <label>F{index} : </label>
-              <InputNumber
-                value={item.limit}
-                min={1}
-                onChange={(e) =>
-                  handleFunctionLimitChange(index, parseInt(e.target.value))
-                }
-              />
-              <RemoveButton onClick={() => handleFunctionRemove(index)}>-</RemoveButton>
+          <InputGroup>
+            <Label>Level :</Label>
+            <InputNumber
+              name="level"
+              min={0}
+              value={data.level}
+              onChange={changeLevel}
+            />
+          </InputGroup>
+          <InputGroup>
+            <Label>Board Size :</Label>
+            <InputNumber
+              name="board_height"
+              min={4}
+              value={data.map.length || 4}
+              onChange={changeBoardSize}
+            />
+            x
+            <InputNumber
+              name="board_width"
+              min={4}
+              value={data.map[0].length}
+              onChange={changeBoardSize}
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <Label>Start Position :</Label>
+            <InputNumber
+              name="player_x"
+              min={0}
+              value={player.x}
+              onChange={changeStartPosition}
+            />
+            ,
+            <InputNumber
+              name="player_y"
+              min={0}
+              value={player.y}
+              onChange={changeStartPosition}
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <div>
+              <Label>Functions :</Label>
+              {data.function.map((item, index) => (
+                <div key={index}>
+                  <label>F{index} : </label>
+                  <InputNumber
+                    value={item.limit}
+                    min={1}
+                    onChange={(e) =>
+                      handleFunctionLimitChange(index, parseInt(e.target.value))
+                    }
+                  />
+                  <RemoveButton onClick={() => handleFunctionRemove(index)}>-</RemoveButton>
+                </div>
+              ))}
+              <AddButton onClick={handleFunctionAdd}>+</AddButton>
             </div>
-          ))}
-          <AddButton onClick={handleFunctionAdd}>+</AddButton>
+          </InputGroup>
         </div>
-      </InputGroup>
+      </GameContainer>
 
       <PrettyPrintJson data={data} />
     </div>

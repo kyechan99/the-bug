@@ -7,7 +7,7 @@ import dataFileType from "@type/data";
 
 const PrettyPrintJson = ({ data }: { data: dataFileType }) => {
     const copyData = () => {
-        window.navigator.clipboard.writeText(JSON.stringify(data)).then(() => {
+        window.navigator.clipboard.writeText(JSON.stringify(data, null, 2)).then(() => {
             // alert("Copied !! ");
         });
     }
@@ -22,7 +22,6 @@ const PrettyPrintJson = ({ data }: { data: dataFileType }) => {
             </Link>
         </CodeMenu>
     </CodeWrapper>;
-    return <div>{/* <pre>{JSON.stringify(data, null, 2)}</pre> */}</div>;
 };
 
 export default PrettyPrintJson;
@@ -34,7 +33,7 @@ const CodeWrapper = styled.div`
     margin: 3rem 0rem 5rem 0rem;
     padding: 1rem;
     background-color: ${({ theme }) => theme.colors.grey};
-    border: 1px solid black;
+    // border: 1px solid black;
 `;
 const Code = styled.code`
     display: block;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const InputGroup = styled.div`
-  margin: 0.25rem 0rem;
+  margin: 0.5rem 0rem;
 `;
 export const InputNumber = styled.input.attrs((props) => ({
     type: "number",
