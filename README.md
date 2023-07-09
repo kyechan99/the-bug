@@ -15,4 +15,4 @@ Enter the given commands in the limited space.
 
 ![playing](./images/playing.gif)
 
-You must eat all the food to succeed.
+Eat all the food to succeed.

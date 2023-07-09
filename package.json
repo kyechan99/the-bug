@@ -1,7 +1,8 @@
 {
-  "name": "justice",
+  "name": "the-bug",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kyechan99.github.io/the-bug/index.html",
   "dependencies": {
     "@tabler/icons-react": "^2.22.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -27,7 +28,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +52,7 @@
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "@types/styled-components": "^5.1.26",
-    "craco-alias": "^3.0.1"
+    "craco-alias": "^3.0.1",
+    "gh-pages": "^5.0.0"
   }
 }
