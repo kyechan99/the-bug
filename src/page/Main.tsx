@@ -32,7 +32,7 @@ const Main = () => {
           {openLevel && (
             <LevelLink>
               {Object.keys(levels).map((level) => (
-                <Link to={`/game/${level}`}>
+                <Link to={`/game/${level}`} key={level}>
                   <Button>{level.replace("level_", "")}</Button>
                 </Link>
               ))}
@@ -47,6 +47,7 @@ const Main = () => {
             <IconBrandGithub className="" />
           </Button>
         </Link>
+        <SubMessage>Used <Link to="https://github.com/tabler/tabler-icons" target="_blank">Tabler-icons</Link></SubMessage>
       </MenuList>
     </div>
   );
@@ -74,4 +75,11 @@ const LevelLink = styled.div`
   left: 8rem;
   display: flex;
   gap: 0.25rem;
+`;
+
+const SubMessage = styled.span`
+  color: ${({ theme }) => theme.colors.grey};
+  a {
+    color: ${({ theme }) => theme.colors.grey};
+  }
 `;

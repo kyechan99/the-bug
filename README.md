@@ -7,12 +7,7 @@ Give the bug a move command.
 
 ## How to play
 
-![ready](./images/ready.gif)
-
-Enter the given commands in the limited space.
-
-<br/>
-
 ![playing](./images/playing.gif)
 
-Eat all the food to succeed.
+1. Enter the given commands in the limited space.
+2. Eat all the food to succeed.

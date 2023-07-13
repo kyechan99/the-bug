@@ -2,7 +2,7 @@
   "name": "the-bug",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kyechan99.github.io/the-bug/index.html",
+  "homepage": "./",
   "dependencies": {
     "@tabler/icons-react": "^2.22.0",
     "@testing-library/jest-dom": "^5.16.5",

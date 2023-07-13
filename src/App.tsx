@@ -22,7 +22,9 @@ const router = createBrowserRouter([
     path: "game/:mode",
     element: <Game />,
   },
-]);
+], {
+  basename: '/the-bug'
+});
 
 function App() {
   return (
